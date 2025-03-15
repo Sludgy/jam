@@ -11,5 +11,10 @@ config_version=5
 [application]
 
 config/name="jam"
+run/main_scene="uid://6x6jq6c7tfvs"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Manager="*res://Scripts/manager.gd"
