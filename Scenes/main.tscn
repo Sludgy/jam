@@ -1,3 +1,25 @@
-[gd_scene format=3 uid="uid://6x6jq6c7tfvs"]
+[gd_scene load_steps=3 format=3 uid="uid://6x6jq6c7tfvs"]
 
-[node name="Main" type="Node3D"]
+[ext_resource type="Texture2D" uid="uid://b6vfmb56xbv8k" path="res://icon.svg" id="1_jjgbg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jjgbg"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(583, 328)
+scale = Vector2(9.57813, 5.60352)
+texture = ExtResource("1_jjgbg")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+mesh = SubResource("BoxMesh_jjgbg")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.924878, 0.380263, 0, -0.380263, 0.924878, 0, 0.929171, 2.36018)
