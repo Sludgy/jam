@@ -24,4 +24,5 @@ func plot_graph(stock):
 	for i in size:
 		points.append(Vector2(i*POINT_SPACING, -stock["history"][i]))
 	line.points = points
+	# remember to remove old children when updating graph
 	add_child(line)

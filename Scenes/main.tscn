@@ -10,6 +10,7 @@
 script = ExtResource("1_bo1nx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.314316, 0.314316, 0.314316, 1)
 position = Vector2(508, 384.844)
 scale = Vector2(7.46875, 5.42432)
 texture = ExtResource("1_jjgbg")
@@ -29,7 +30,18 @@ mesh = SubResource("BoxMesh_jjgbg")
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.924878, 0.380263, 0, -0.380263, 0.924878, 0, 0.929171, 2.36018)
 
-[node name="Stocks" type="Label" parent="."]
+[node name="Graph" type="Node2D" parent="."]
+position = Vector2(508, 381)
+script = ExtResource("3_8gbba")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Stocks" type="Label" parent="UI"]
+layout_mode = 0
 offset_left = 675.0
 offset_right = 1026.0
 offset_bottom = 153.0
@@ -40,18 +52,77 @@ Stock 3
 Stock 4
 Stock 5"
 
-[node name="Time" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "DAY/TIME"
-
-[node name="Budget" type="Label" parent="."]
+[node name="Budget" type="Label" parent="UI"]
+layout_mode = 0
 offset_left = 366.0
 offset_top = 4.0
 offset_right = 430.0
 offset_bottom = 27.0
 text = "BUDGET"
 
-[node name="Graph" type="Node2D" parent="."]
-position = Vector2(508, 381)
-script = ExtResource("3_8gbba")
+[node name="Time" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 76.0
+offset_bottom = 23.0
+text = "DAY/TIME"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_left = 675.0
+offset_top = 275.0
+offset_right = 967.0
+offset_bottom = 518.0
+
+[node name="Columns" type="HBoxContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="Stock" type="Label" parent="UI/VBoxContainer/Columns"]
+layout_mode = 2
+text = "Stock"
+
+[node name="Price" type="Label" parent="UI/VBoxContainer/Columns"]
+layout_mode = 2
+text = "Price"
+
+[node name="Fewer" type="Label" parent="UI/VBoxContainer/Columns"]
+layout_mode = 2
+text = "Buy"
+
+[node name="Cost" type="Label" parent="UI/VBoxContainer/Columns"]
+layout_mode = 2
+text = "Cost"
+
+[node name="MOP" type="HBoxContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="Stock" type="Label" parent="UI/VBoxContainer/MOP"]
+layout_mode = 2
+text = "stock1"
+
+[node name="Price" type="Label" parent="UI/VBoxContainer/MOP"]
+layout_mode = 2
+text = "$0"
+
+[node name="Fewer" type="Button" parent="UI/VBoxContainer/MOP"]
+layout_mode = 2
+text = "-"
+
+[node name="Count" type="Label" parent="UI/VBoxContainer/MOP"]
+layout_mode = 2
+text = "0"
+
+[node name="More" type="Button" parent="UI/VBoxContainer/MOP"]
+layout_mode = 2
+text = "+"
+
+[node name="Cost" type="Label" parent="UI/VBoxContainer/MOP"]
+layout_mode = 2
+text = "$0"
+
+[node name="Short" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "START NEXT DAY"
+
+[connection signal="pressed" from="UI/VBoxContainer/MOP/Fewer" to="." method="_on_fewer_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/MOP/More" to="." method="_on_more_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Short" to="." method="_on_short_pressed"]

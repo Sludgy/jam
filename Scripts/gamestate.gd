@@ -1,6 +1,16 @@
 extends Node
 
-@onready var time_label: Label = $Time
+@onready var time_label: Label = $UI/Time
+@onready var short_count_label: Label = $UI/VBoxContainer/MOP/Count
+@onready var short_cost_label: Label = $UI/VBoxContainer/MOP/Cost
+
+# in-game time
+var days: int = 0
+var hours: int = 0
+var minutes: int = 0
+var time: float = 0.0
+# how many in-game minutes pass each second
+const TIMESCALE: int = 5
 
 # game state
 enum states {
@@ -11,16 +21,10 @@ enum states {
 }
 var state: states = states.TUTORIAL
 
-# in-game time
-var days: int = 0
-var hours: int = 0
-var minutes: int = 0
-var time: float = 0.0
-# how many in-game minutes pass each second
-const TIMESCALE: int = 5
+var shorting: Array[int] = [0, 0, 0, 0]
 
 func _ready():
-	change_state(states.DAYTIME)
+	change_state(states.STARTOFDAY)
 	
 func _process(delta):
 	match state:
@@ -35,9 +39,6 @@ func _process(delta):
 
 func change_state(target_state):
 	state = target_state
-
-func handle_tutorial():
-	pass
 	
 # show initial game start screen / dialog / story or w.e
 func tutorial():
@@ -84,3 +85,19 @@ func _format_time(hour: int, minute: int):
 	else:
 		minute_string = str(minute)
 	time_label.text = hour_string + ":" + minute_string + " " + meridiem
+
+
+func _on_more_pressed() -> void:
+	shorting[0] += 1
+	update_shorts()
+
+func _on_fewer_pressed() -> void:
+	shorting[0] -= 1
+	update_shorts()
+	
+func update_shorts():
+	short_count_label.text = str(shorting[0])
+	short_cost_label.text = str(shorting[0]*Manager.stocks[0]["history"][Manager.stocks[0]["history"].size()-1])
+
+func _on_short_pressed() -> void:
+	pass # Replace with function body.
