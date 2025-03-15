@@ -1,14 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://6x6jq6c7tfvs"]
+[gd_scene load_steps=4 format=3 uid="uid://6x6jq6c7tfvs"]
 
+[ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://b6vfmb56xbv8k" path="res://icon.svg" id="1_jjgbg"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_jjgbg"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_bo1nx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(583, 328)
-scale = Vector2(9.57813, 5.60352)
+position = Vector2(508, 384.844)
+scale = Vector2(7.46875, 5.42432)
 texture = ExtResource("1_jjgbg")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -23,3 +25,19 @@ mesh = SubResource("BoxMesh_jjgbg")
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.924878, 0.380263, 0, -0.380263, 0.924878, 0, 0.929171, 2.36018)
+
+[node name="Stocks" type="Label" parent="."]
+offset_left = 675.0
+offset_right = 1026.0
+offset_bottom = 153.0
+text = "TEST
+Stock 1
+Stock 2
+Stock 3
+Stock 4
+Stock 5"
+
+[node name="Time" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "DAY/TIME"
