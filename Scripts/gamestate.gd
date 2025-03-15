@@ -1,8 +1,10 @@
 extends Node
 
 @onready var time_label: Label = $UI/Time
-@onready var short_count_label: Label = $UI/VBoxContainer/MOP/Count
-@onready var short_cost_label: Label = $UI/VBoxContainer/MOP/Cost
+@onready var budget_label: Label = $UI/Budget
+@onready var short_count_label: Label = $UI/Shorting/MOP/Count
+@onready var short_cost_label: Label = $UI/Shorting/MOP/Cost
+@onready var total_label: Label = $UI/Shorting/Total
 
 # in-game time
 var days: int = 0
@@ -22,6 +24,9 @@ enum states {
 var state: states = states.TUTORIAL
 
 var shorting: Array[int] = [0, 0, 0, 0]
+var total: int = 0
+
+const DAILY_BUDGET = 1000
 
 func _ready():
 	change_state(states.STARTOFDAY)
@@ -46,7 +51,8 @@ func tutorial():
 
 # short a stock
 func startofday():
-	pass
+	#Manager.budget += DAILY_BUDGET
+	update_budget()
 
 # where the action happens
 func daytime(delta):
@@ -92,12 +98,24 @@ func _on_more_pressed() -> void:
 	update_shorts()
 
 func _on_fewer_pressed() -> void:
-	shorting[0] -= 1
+	# dont go below zero
+	if (shorting[0] != 0):
+		shorting[0] -= 1
 	update_shorts()
 	
 func update_shorts():
+	total = 0
+	for i in shorting.size():
+		if shorting[i] != 0:
+			total += shorting[i] * Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]
+	total_label.text = "$" + str(total)
 	short_count_label.text = str(shorting[0])
-	short_cost_label.text = str(shorting[0]*Manager.stocks[0]["history"][Manager.stocks[0]["history"].size()-1])
+	short_cost_label.text = "$" + str(shorting[0] * Manager.stocks[0]["history"][Manager.stocks[0]["history"].size()-1])
 
 func _on_short_pressed() -> void:
-	pass # Replace with function body.
+	# short stocks
+	pass
+		
+
+func update_budget():
+	budget_label.text = str(Manager.budget)
