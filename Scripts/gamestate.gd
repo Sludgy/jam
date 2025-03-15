@@ -5,9 +5,9 @@ extends Node
 # game state
 enum states {
 	TUTORIAL,
-	MORNING,
+	STARTOFDAY,
 	DAYTIME,
-	NIGHT
+	ENDOFDAY
 }
 var state: states = states.TUTORIAL
 
@@ -17,7 +17,7 @@ var hours: int = 0
 var minutes: int = 0
 var time: float = 0.0
 # how many in-game minutes pass each second
-const TIMESCALE: int = 30
+const TIMESCALE: int = 5
 
 func _ready():
 	change_state(states.DAYTIME)
@@ -26,12 +26,12 @@ func _process(delta):
 	match state:
 		states.TUTORIAL:
 			tutorial()
-		states.MORNING:
-			morning()
+		states.STARTOFDAY:
+			startofday()
 		states.DAYTIME:
 			daytime(delta)
-		states.NIGHT:
-			night()
+		states.ENDOFDAY:
+			endofday()
 
 func change_state(target_state):
 	state = target_state
@@ -44,7 +44,7 @@ func tutorial():
 	pass
 
 # short a stock
-func morning():
+func startofday():
 	pass
 
 # where the action happens
@@ -52,7 +52,7 @@ func daytime(delta):
 	_calculate_time(delta)
 
 # end of day scoreboard
-func night():
+func endofday():
 	pass
 
 func _calculate_time(delta):
