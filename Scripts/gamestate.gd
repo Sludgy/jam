@@ -109,6 +109,10 @@ func _pickup_phone():
 	var texture = load("res://Assets/2D/ui/portraits/"+call["caller"]+".png")
 	portrait_sprite.texture = texture
 	
+func _handle_dialog_choice(choice: bool):
+	# no = 0, yes = 1
+	print(str(choice) + " chosen")
+	
 # helper function for time to text
 func _update_time(hour: int, minute: int):
 	# our day starts at 10am
@@ -185,3 +189,9 @@ func update_stocks():
 	for i in Manager.stocks.size():
 		label_text += Manager.stocks[i]["id"] + " " + "Value: " + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
 	stocks_label.text = label_text
+
+func _on_no_pressed() -> void:
+	_handle_dialog_choice(0)
+
+func _on_yes_pressed() -> void:
+	_handle_dialog_choice(1)

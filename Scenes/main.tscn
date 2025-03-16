@@ -220,5 +220,7 @@ text = "No"
 [connection signal="pressed" from="UI/Shorting/MOP/Fewer" to="." method="_on_fewer_pressed"]
 [connection signal="pressed" from="UI/Shorting/MOP/More" to="." method="_on_more_pressed"]
 [connection signal="pressed" from="UI/Shorting/Short" to="." method="_on_short_pressed"]
+[connection signal="pressed" from="UI/Dialog/YesNoSprite/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="UI/Dialog/YesNoSprite/No" to="." method="_on_no_pressed"]
 
 [editable path="3DScene/SubViewport/Desk"]
