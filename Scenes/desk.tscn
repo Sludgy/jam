@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://sb0msx0pn360"]
+[gd_scene load_steps=13 format=3 uid="uid://sb0msx0pn360"]
 
 [ext_resource type="PackedScene" uid="uid://ch5lb7d6cpmxq" path="res://Assets/3D/desk/desk.glb" id="1_7rkfp"]
 [ext_resource type="PackedScene" uid="uid://dcrumkaf1jrw7" path="res://Scenes/clock.tscn" id="2_dp2kn"]
@@ -7,6 +7,15 @@
 [ext_resource type="PackedScene" uid="uid://8wdq043drhfq" path="res://Assets/3D/pencilmug/pencilmug.glb" id="5_svl0u"]
 [ext_resource type="PackedScene" uid="uid://cq0p3hk0c4ysm" path="res://Assets/3D/paper/paper.glb" id="6_4pfso"]
 [ext_resource type="PackedScene" uid="uid://esjauui43w21" path="res://Assets/3D/phone/phone.glb" id="7_5crnc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dp2kn"]
+emission_enabled = true
+emission = Color(1, 0.58, 0.58, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_svl0u"]
+material = SubResource("StandardMaterial3D_dp2kn")
+size = Vector3(0.005, 0.53, 1.665)
 
 [sub_resource type="Animation" id="Animation_svl0u"]
 length = 0.001
@@ -69,6 +78,10 @@ transform = Transform3D(-0.00559646, 0, 0.31495, 0, 0.315, 0, -0.31495, 0, -0.00
 
 [node name="phone" parent="." instance=ExtResource("7_5crnc")]
 transform = Transform3D(0.0800308, 0, 0.120913, 0, 0.145, 0, -0.120913, 0, 0.0800308, -0.757285, 2.26156, -1.41121)
+
+[node name="callLight" type="MeshInstance3D" parent="phone"]
+transform = Transform3D(0.930991, -0.364905, 0.0100501, 0.364997, 0.930957, -0.00972117, -0.0058088, 0.0127186, 0.999903, -2.31708, 3.89378, 0.408075)
+mesh = SubResource("BoxMesh_svl0u")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

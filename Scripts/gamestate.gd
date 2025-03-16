@@ -9,6 +9,11 @@ extends Node
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
 @onready var graph = get_node("Graph")
 
+@onready var ticker_name: Label = $Background/TickerBoard/TickerName
+@onready var ticker_budget : Label = $Background/TickerBoard/TickerBudget
+@onready var callLight : MeshInstance3D = $"3DScene/SubViewport/Desk/phone/callLight"
+
+
 @onready var dialog_control: Control = $UI/Dialog
 @onready var portrait_sprite: Sprite2D = $UI/Dialog/PortraitSprite
 @onready var dialog_label: Label = $UI/Dialog/DialogSprite/Dialog
@@ -92,6 +97,13 @@ func startofday():
 # where the action happens
 func daytime(delta):
 	_calculate_time(delta)
+	
+	if call_waiting:
+		if minutes % 2 == 0:
+			callLight.show()
+		else:
+			callLight.hide()
+	
 
 # end of day scoreboard
 func endofday():
@@ -114,9 +126,11 @@ func _calculate_time(delta):
 # start a phone call
 func _update_phone():
 	call_waiting = true
+
 	# play sounds, animations etc.
 
 func _pickup_phone():
+	callLight.hide()
 	$"3DScene/SubViewport/Desk/AnimationPlayer".play("phone_pickup")
 	if (current_call != 0):
 		current_call+=1
@@ -238,7 +252,17 @@ func grow_stocks():
 
 func update_stocks():
 	var label_text: String = ""
+	var name_text: String = ""
+	var budget_text: String = ""
 	for i in Manager.stocks.size():
 		label_text += Manager.stocks[i]["id"] + " " + "Value: " + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
+		name_text += Manager.stocks[i]["id"] + "\n"
+		budget_text += "$" + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
+		
+		
+	ticker_name.text = name_text
+	ticker_budget.text = budget_text
 	stocks_label.text = label_text
+	
+	
 		
