@@ -1,6 +1,7 @@
 extends Node
 
 @onready var budget_label: Label3D = $"3DScene/SubViewport/Desk/paper/DailyBudget"
+@onready var opening_budget_label: RichTextLabel = $UI/Opening/Screen/Budget
 @onready var stock_name_label: RichTextLabel = $UI/Opening/Screen/Stock
 @onready var short_count_label: RichTextLabel = $UI/Opening/Screen/Count
 @onready var short_cost_label: RichTextLabel = $UI/Opening/Screen/Cost
@@ -104,7 +105,9 @@ func receive_budget():
 
 # short a stock
 func startofday():
-	# reset shortlist
+	# reset shortlist THIS WILL ONLY EXECUTE IF OPENING UI IS HIDDEN SO MAKE SURE
+	# ITS HIDDEN IN THE SCENE TREE BEFORE YOU RUN THE GAME
+	# JANKY BUT TIME IS MONEY
 	if !$UI/Opening.is_visible_in_tree():
 		shorting = [0, 0, 0, 0]
 		update_shorts()
@@ -130,9 +133,12 @@ func endofday():
 	change_state(states.SUMMARY)
 	
 func summary():
-	change_state(states.RECEIVEBUDGET)
-	reset_time()
-	days += 1
+	if (Manager.budget <= 0):
+		change_state(states.LOSE)
+	else:
+		change_state(states.RECEIVEBUDGET)
+		reset_time()
+		days += 1
 	
 func lose():
 	pass
@@ -280,6 +286,7 @@ func _on_add_subtract(id: int, operation: bool):
 			shorting[id] -= 1
 	update_shorts()
 	
+# OPENING SCREEN MUST BE HIDDEN OR THIS WILL NOT RUN ON 
 func update_shorts():
 	total = 0
 	var name_text: String = ""
@@ -295,6 +302,7 @@ func update_shorts():
 	stock_name_label.text = name_text
 	short_count_label.text = count_text
 	short_cost_label.text = cost_text
+	opening_budget_label.text = "opening budget:\n" + str(Manager.budget)
 
 func _on_open_market_pressed() -> void:
 	# short stocks
@@ -315,7 +323,6 @@ func _on_open_market_pressed() -> void:
 
 func update_budget():
 	budget_label.text = "Today's Budget " + "\n" + "$" + str(Manager.budget)
-	
 
 func grow_stocks():
 	for i in Manager.stocks.size():
@@ -340,4 +347,3 @@ func update_stocks():
 	
 	ticker_color.append_text(name_text)
 	ticker_budget.append_text(budget_text)
-	stocks_label.text = label_text
