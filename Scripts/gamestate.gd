@@ -8,6 +8,10 @@ extends Node
 @onready var total_label: Label = $UI/Shorting/Total
 @onready var graph = get_node("Graph")
 
+@onready var portrait_sprite: Sprite2D = $UI/Dialog/PortraitSprite
+@onready var dialog_label: Label = $UI/Dialog/DialogSprite/Dialog
+@onready var name_label: Label = $UI/Dialog/DialogSprite/Name
+
 # in-game time
 var days: int = 0
 var hours: int = 0
@@ -95,7 +99,14 @@ func _calculate_time(delta):
 # start a phone call
 func _update_phone():
 	print("Phone is calling")
-	pass
+	_pickup_phone()
+
+func _pickup_phone():
+	var call = Manager.calls.pick_random()
+	dialog_label.text = call["dialog"]
+	name_label.text = call["caller"]
+	var texture = load("res://Assets/2D/ui/portraits/"+call["caller"]+".png")
+	portrait_sprite.texture = texture
 	
 # helper function for time to text
 func _update_time(hour: int, minute: int):
@@ -142,8 +153,8 @@ func update_shorts():
 
 func _on_short_pressed() -> void:
 	# short stocks
-	# cant short more than 150% of your budget
-	if total <= Manager.budget*1.5:
+	# cant short more than 200% of your budget
+	if total <= Manager.budget*2:
 		# sell the stocks
 		for i in shorting.size():
 			if shorting[i] != 0:
