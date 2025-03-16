@@ -1,10 +1,47 @@
-[gd_scene load_steps=7 format=3 uid="uid://6x6jq6c7tfvs"]
+[gd_scene load_steps=13 format=3 uid="uid://6x6jq6c7tfvs"]
 
 [ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://sb0msx0pn360" path="res://Scenes/desk.tscn" id="2_8gbba"]
 [ext_resource type="Texture2D" uid="uid://cwx7b1sis40on" path="res://Assets/2D/background/StockPlaceBase.png" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://bwut0gr2m5u1a" path="res://Scripts/graph.gd" id="3_8gbba"]
 [ext_resource type="Texture2D" uid="uid://bnblmkabios18" path="res://Assets/2D/background/bckTowers.png" id="3_kry3j"]
+[ext_resource type="Texture2D" uid="uid://cxdxdvt45vmjo" path="res://Assets/2D/background/MidTowers.png" id="4_6bp64"]
+[ext_resource type="Texture2D" uid="uid://dd73xb1gl8jeg" path="res://Assets/2D/background/window.png" id="4_21xkr"]
+[ext_resource type="Texture2D" uid="uid://b8p1hylv3aklg" path="res://Assets/2D/background/FrontTowers.png" id="5_344ge"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s7hhp"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_npfk4"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 1.82665),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_344ge"]
+resource_local_to_scene = true
+resource_name = "clock_Plane_001"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 1.82665),
+"attribute_data": PackedByteArray(0, 0, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
+"material": SubResource("StandardMaterial3D_s7hhp"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_npfk4")
 
 [sub_resource type="Environment" id="Environment_8gbba"]
 ambient_light_source = 2
@@ -17,18 +54,44 @@ script = ExtResource("1_bo1nx")
 [node name="Background" type="ParallaxBackground" parent="."]
 
 [node name="BaseLayer" type="ParallaxLayer" parent="Background"]
+position = Vector2(4, -151)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/BaseLayer"]
 position = Vector2(505, 431)
-scale = Vector2(0.435, 0.435)
+scale = Vector2(0.325, 0.325)
 texture = ExtResource("2_jjvhh")
 
 [node name="BackTowers" type="ParallaxLayer" parent="Background"]
-position = Vector2(490, 403)
-scale = Vector2(0.3, 0.3)
+position = Vector2(494, 276)
+scale = Vector2(0.355, 0.355)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/BackTowers"]
+scale = Vector2(0.815, 0.815)
 texture = ExtResource("3_kry3j")
+
+[node name="MidTowers" type="ParallaxLayer" parent="Background"]
+position = Vector2(-40, -102)
+scale = Vector2(1.115, 1.115)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/MidTowers"]
+position = Vector2(500, 339)
+scale = Vector2(0.31, 0.31)
+texture = ExtResource("4_6bp64")
+
+[node name="FrontTowers" type="ParallaxLayer" parent="Background"]
+position = Vector2(4, -109)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/FrontTowers"]
+position = Vector2(512, 314)
+scale = Vector2(0.29, 0.29)
+texture = ExtResource("5_344ge")
+
+[node name="Window" type="ParallaxLayer" parent="Background"]
+position = Vector2(4, -109)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Window"]
+texture = ExtResource("4_21xkr")
+centered = false
 
 [node name="3DScene" type="SubViewportContainer" parent="."]
 offset_right = 512.0
@@ -45,7 +108,7 @@ size = Vector2i(1024, 769)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="3DScene/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.997185, 0.0749787, 0, -0.0749787, 0.997185, -0.00910887, 1.154, 2.29164)
+transform = Transform3D(1, 0, 0, 0, 0.972039, 0.23482, 0, -0.23482, 0.972039, -0.00910887, 1.28818, 2.29164)
 
 [node name="Desk" parent="3DScene/SubViewport" instance=ExtResource("2_8gbba")]
 transform = Transform3D(-1.59547e-08, 0, 0.365, 0, 0.365, 0, -0.365, 0, -1.59547e-08, 0, 0, 1.395)
@@ -53,14 +116,24 @@ transform = Transform3D(-1.59547e-08, 0, 0.365, 0, 0.365, 0, -0.365, 0, -1.59547
 [node name="clock" parent="3DScene/SubViewport/Desk" index="1"]
 transform = Transform3D(0.462758, 0, 0.306397, 0, 0.555, 0, -0.306397, 0, 0.462758, 0.182494, 2.35886, -1.23412)
 
+[node name="screen" parent="3DScene/SubViewport/Desk/clock" index="1"]
+mesh = SubResource("ArrayMesh_344ge")
+
+[node name="Time" parent="3DScene/SubViewport/Desk/clock" index="2"]
+transform = Transform3D(-5.96046e-08, 0, -1, 0, 1, 0, 1, 0, -5.96046e-08, -0.342021, 0.297393, -0.762341)
+modulate = Color(1, 0.67, 0.67, 1)
+text = "10:00"
+font_size = 74
+
 [node name="pencilmug" parent="3DScene/SubViewport/Desk" index="4"]
-transform = Transform3D(0.285, 0, 1.77636e-15, 0, 0.285, 0, -1.77636e-15, 0, 0.285, 0.309183, 2.00616, 0.470883)
+transform = Transform3D(0.285, 0, 1.77636e-15, 0, 0.285, 0, -1.77636e-15, 0, 0.285, 0.423236, 2.00616, 0.71656)
 
 [node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
-transform = Transform3D(0.0800309, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800311, -0.757285, 2.26156, -1.63899)
+transform = Transform3D(0.0800309, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800314, -0.757285, 2.26156, -1.63899)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+visible = false
 light_color = Color(0.710352, 0.602439, 0.574294, 1)
 light_energy = 3.0
 shadow_enabled = true
@@ -68,6 +141,11 @@ sky_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="3DScene/SubViewport"]
 environment = SubResource("Environment_8gbba")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="3DScene/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00541019, 1.55749, 1.42349)
+light_color = Color(1, 0.813271, 0.553227, 1)
+light_energy = 3.0
 
 [node name="Graph" type="Node2D" parent="."]
 position = Vector2(508, 381)
@@ -171,3 +249,4 @@ text = "START NEXT DAY"
 [connection signal="pressed" from="UI/Shorting/Short" to="." method="_on_short_pressed"]
 
 [editable path="3DScene/SubViewport/Desk"]
+[editable path="3DScene/SubViewport/Desk/clock"]

@@ -6,7 +6,9 @@ extends Node
 @onready var short_count_label: Label = $UI/Shorting/MOP/Count
 @onready var short_cost_label: Label = $UI/Shorting/MOP/Cost
 @onready var total_label: Label = $UI/Shorting/Total
+@onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
 @onready var graph = get_node("Graph")
+
 
 # in-game time
 var days: int = 0
@@ -119,6 +121,9 @@ func _update_time(hour: int, minute: int):
 	else:
 		minute_string = str(minute)
 	time_label.text = hour_string + ":" + minute_string + " " + meridiem
+	if minute % 15 == 0:
+		clock_time.text = hour_string + ":" + minute_string
+		
 
 
 func _on_more_pressed() -> void:
