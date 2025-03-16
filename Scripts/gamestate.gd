@@ -1,10 +1,9 @@
 extends Node
 
 @onready var budget_label: Label3D = $"3DScene/SubViewport/Desk/paper/DailyBudget"
-@onready var stocks_label: Label = $UI/Stocks
-@onready var short_count_label: Label = $UI/Shorting/MOP/Count
-@onready var short_cost_label: Label = $UI/Shorting/MOP/Cost
-@onready var total_label: Label = $UI/Shorting/Total
+@onready var stock_name_label: RichTextLabel = $UI/Opening/Screen/Stock
+@onready var short_count_label: RichTextLabel = $UI/Opening/Screen/Count
+@onready var short_cost_label: RichTextLabel = $UI/Opening/Screen/Cost
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
 @onready var graph = get_node("Background/Graph")
 
@@ -12,7 +11,6 @@ extends Node
 @onready var ticker_name: Label = $Background/TickerBoard/TickerName
 @onready var ticker_budget : RichTextLabel = $Background/TickerBoard/TickerBudget
 @onready var callLight : MeshInstance3D = $"3DScene/SubViewport/Desk/phone/callLight"
-
 
 @onready var dialog_control: Control = $UI/Dialog
 @onready var portrait_sprite: Sprite2D = $UI/Dialog/PortraitSprite
@@ -22,6 +20,8 @@ extends Node
 @onready var player_dialog_control: Control = $UI/PlayerDialog
 @onready var player_dialog_label: Control = $UI/PlayerDialog/DialogSprite/Dialog
 
+@onready var buttons_control: Control = $UI/Opening/Screen/Buttons
+
 # in-game time
 var days: int = 0
 var hours: int = 0
@@ -29,12 +29,12 @@ var previous_minute: int = -1
 var minutes: int = 0
 var time: float = 0.0
 # how many in-game minutes pass each second
-#const TIMESCALE: int = 6
-const TIMESCALE: int = 60
+const TIMESCALE: int = 3
+#const TIMESCALE: int = 30
 # how many minutes it takes for a phone call to occur
-const PHONE_CALL_FREQUENCY: int = 75
-# grow stocks on the hour
-const STOCK_GROWTH_FREQUENCY: int = 60
+const PHONE_CALL_FREQUENCY: int = 45
+# grow stocks on the half hour
+const STOCK_GROWTH_FREQUENCY: int = 30
 
 # amount to increase/decrease a stock when a choice is made
 const STOCK_INCREASE_AMOUNT: int = 5
@@ -47,7 +47,9 @@ enum states {
 	STARTOFDAY,
 	DAYTIME,
 	ENDOFDAY,
-	SUMMARY
+	SUMMARY,
+	WIN,
+	LOSE
 }
 var state: states = states.TUTORIAL
 
@@ -66,6 +68,9 @@ func _ready():
 	update_stocks()
 	change_state(states.RECEIVEBUDGET)
 	
+	for i in buttons_control.get_children():
+		i.connect("add_subtract_button_pressed", _on_add_subtract)
+	
 func _process(delta):
 	match state:
 		states.TUTORIAL:
@@ -80,6 +85,10 @@ func _process(delta):
 			endofday()
 		states.SUMMARY:
 			summary()
+		states.WIN:
+			win()
+		states.LOSE:
+			lose()
 
 func change_state(target_state):
 	state = target_state
@@ -95,7 +104,11 @@ func receive_budget():
 
 # short a stock
 func startofday():
-	$UI/Shorting.show()
+	# reset shortlist
+	if !$UI/Opening.is_visible_in_tree():
+		shorting = [0, 0, 0, 0]
+		update_shorts()
+		$UI/Opening.show()
 
 # where the action happens
 func daytime(delta):
@@ -118,6 +131,20 @@ func endofday():
 	
 func summary():
 	change_state(states.RECEIVEBUDGET)
+	reset_time()
+	days += 1
+	
+func lose():
+	pass
+	
+func win():
+	pass
+	
+func reset_time():
+	time = 0
+	previous_minute = -1
+	minutes = 0
+	hours = 0
 
 func _calculate_time(delta):
 	time += delta
@@ -193,9 +220,15 @@ func _handle_dialog_choice(choice: bool):
 	
 func _input(event):
 	if event is InputEventMouseButton and event.pressed:
-		if player_dialog_control.is_visible_in_tree():
-			current_call = current_call + 1
-			_hang_up()
+		match(state):
+			states.TUTORIAL:
+				change_state(states.RECEIVEBUDGET)
+			states.DAYTIME:
+				if player_dialog_control.is_visible_in_tree():
+					current_call = current_call + 1
+					_hang_up()
+			states.SUMMARY:
+				change_state(states.RECEIVEBUDGET)
 
 func _increase_stock(id: int, decrease: bool):
 	# if we want to decrease instead, make the amount negative
@@ -234,29 +267,36 @@ func _update_time(hour: int, minute: int):
 		minute_string = "0" + str(minute)
 	else:
 		minute_string = str(minute)
-	if minute % 15 == 0:
+	if minute % 10 == 0:
 		clock_time.text = hour_string + ":" + minute_string
 		
-func _on_more_pressed() -> void:
-	shorting[0] += 1
-	update_shorts()
-
-func _on_fewer_pressed() -> void:
-	# dont go below zero
-	if (shorting[0] != 0):
-		shorting[0] -= 1
+func _on_add_subtract(id: int, operation: bool):
+	# 0 = SUBTRACTION, 1 = ADDITION
+	if operation:
+		shorting[id] += 1
+	else:
+		# dont go below zero
+		if (shorting[id] != 0):
+			shorting[id] -= 1
 	update_shorts()
 	
 func update_shorts():
 	total = 0
+	var name_text: String = ""
+	var count_text: String = ""
+	var cost_text: String = ""
 	for i in shorting.size():
-		if shorting[i] != 0:
-			total += shorting[i] * Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]
-	total_label.text = "$" + str(total)
-	short_count_label.text = str(shorting[0])
-	short_cost_label.text = "$" + str(shorting[0] * Manager.stocks[0]["history"][Manager.stocks[0]["history"].size()-1])
+		name_text = name_text + Manager.stocks[i]["id"] +"\n"
+		count_text = count_text + str(shorting[i]) + "\n"
+		var mini_total: int = shorting[i] * Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]
+		total = total + mini_total
+		cost_text = cost_text + "$" + str(mini_total) + "\n"
+	cost_text = cost_text + "$" + str(total)
+	stock_name_label.text = name_text
+	short_count_label.text = count_text
+	short_cost_label.text = cost_text
 
-func _on_short_pressed() -> void:
+func _on_open_market_pressed() -> void:
 	# short stocks
 	# cant short more than 200% of your budget
 	if total <= Manager.budget*2:
@@ -270,7 +310,7 @@ func _on_short_pressed() -> void:
 				# money, yum
 				Manager.budget += Manager.stocks[i]["shorted"]*Manager.stocks[i]["shorted_count"]
 		update_budget()
-		$UI/Shorting.hide()
+		$UI/Opening.hide()
 		change_state(states.DAYTIME)
 
 func update_budget():
@@ -294,13 +334,10 @@ func update_stocks():
 		label_text += Manager.stocks[i]["id"] + " " + "Value: " + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
 		name_text += "[color=" + Manager.stocks[i]["text_color"] +"]" + Manager.stocks[i]["id"] + "[/color]"+ "\n"
 		budget_text += "[color=" + Manager.stocks[i]["text_color"] + "]" + "$" + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "[/color]"+ "\n"
-		
+
 	ticker_color.clear()
 	ticker_budget.clear()
 	
 	ticker_color.append_text(name_text)
 	ticker_budget.append_text(budget_text)
 	stocks_label.text = label_text
-	
-	
-		

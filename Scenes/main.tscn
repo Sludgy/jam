@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cjcosxy5w04c3" path="res://Assets/2D/UI/Computer/ComputerUIbase.png" id="14_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://cif40y0a3m4rh" path="res://Assets/2D/UI/Computer/ComputerBorderNight.png" id="16_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://dug1ph4hub3o1" path="res://Assets/2D/UI/Computer/ComputerUIbaseNIGHT.png" id="17_b3802"]
-[ext_resource type="AudioStream" uid="uid://cno841c6xhfa6" path="res://Assets/music/fart-83471.mp3" id="19_fevyy"]
+[ext_resource type="PackedScene" uid="uid://5qaj5x3cdkdr" path="res://Scenes/button.tscn" id="21_pdsj5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b3802"]
 font = ExtResource("6_b3802")
@@ -77,7 +77,6 @@ size = Vector2(178, 377)
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_hibaj"]
 clip_count = 1
 clip_0/name = &"toot"
-clip_0/stream = ExtResource("19_fevyy")
 clip_0/auto_advance = 0
 
 [node name="Main" type="Node2D"]
@@ -189,6 +188,7 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="3DScene/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.972039, 0.23482, 0, -0.23482, 0.972039, -0.00910887, 1.28818, 2.29164)
+current = true
 
 [node name="Desk" parent="3DScene/SubViewport" instance=ExtResource("2_8gbba")]
 transform = Transform3D(-1.59547e-08, 0, 0.365, 0, 0.365, 0, -0.365, 0, -1.59547e-08, 0, 0, 1.395)
@@ -220,7 +220,7 @@ outline_size = 10
 transform = Transform3D(0.0800306, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800312, -0.757285, 2.26156, -1.41121)
 
 [node name="phone" parent="3DScene/SubViewport/Desk/phone" index="0"]
-transform = Transform3D(1, 1.49012e-08, 3.35276e-08, -3.72529e-09, 2.1, 0, 3.72529e-09, 0, 1.08385, -0.0845616, 1.2406, 0.393256)
+transform = Transform3D(0.999999, 1.49012e-08, -1.49012e-07, -3.72529e-09, 2.1, 0, -1.49012e-07, -8.88178e-16, 1.08385, 4.18562, 1.2406, -1.17042)
 
 [node name="callLight" parent="3DScene/SubViewport/Desk/phone" index="1"]
 transform = Transform3D(0.930991, -0.364905, 0.0100497, 0.364997, 0.930957, -0.00972117, -0.00580886, 0.0127186, 0.999902, -1.4532, 3.24513, 0.408833)
@@ -247,95 +247,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Stocks" type="Label" parent="UI"]
-visible = false
-layout_mode = 0
-offset_left = 675.0
-offset_right = 1026.0
-offset_bottom = 153.0
-text = "TEST
-Stock 1
-Stock 2
-Stock 3
-Stock 4
-Stock 5"
-
-[node name="Budget" type="Label" parent="UI"]
-layout_mode = 0
-offset_left = 366.0
-offset_top = 4.0
-offset_right = 430.0
-offset_bottom = 27.0
-text = "BUDGET"
-
-[node name="Time" type="Label" parent="UI"]
-visible = false
-layout_mode = 0
-offset_right = 76.0
-offset_bottom = 23.0
-text = "DAY/TIME"
-
-[node name="Shorting" type="VBoxContainer" parent="UI"]
-layout_mode = 0
-offset_left = 675.0
-offset_top = 275.0
-offset_right = 967.0
-offset_bottom = 518.0
-
-[node name="Columns" type="HBoxContainer" parent="UI/Shorting"]
-layout_mode = 2
-
-[node name="Stock" type="Label" parent="UI/Shorting/Columns"]
-layout_mode = 2
-text = "Stock"
-
-[node name="Price" type="Label" parent="UI/Shorting/Columns"]
-layout_mode = 2
-text = "Price"
-
-[node name="Fewer" type="Label" parent="UI/Shorting/Columns"]
-layout_mode = 2
-text = "Buy"
-
-[node name="Cost" type="Label" parent="UI/Shorting/Columns"]
-layout_mode = 2
-text = "Cost"
-
-[node name="MOP" type="HBoxContainer" parent="UI/Shorting"]
-layout_mode = 2
-
-[node name="Stock" type="Label" parent="UI/Shorting/MOP"]
-layout_mode = 2
-text = "stock1"
-
-[node name="Price" type="Label" parent="UI/Shorting/MOP"]
-layout_mode = 2
-text = "$0"
-
-[node name="Fewer" type="Button" parent="UI/Shorting/MOP"]
-layout_mode = 2
-text = "-"
-
-[node name="Count" type="Label" parent="UI/Shorting/MOP"]
-layout_mode = 2
-text = "0"
-
-[node name="More" type="Button" parent="UI/Shorting/MOP"]
-layout_mode = 2
-text = "+"
-
-[node name="Cost" type="Label" parent="UI/Shorting/MOP"]
-layout_mode = 2
-text = "$0"
-
-[node name="Total" type="Label" parent="UI/Shorting"]
-layout_mode = 2
-text = "$0"
-
-[node name="Short" type="Button" parent="UI/Shorting"]
-layout_mode = 2
-text = "START NEXT DAY"
 
 [node name="Dialog" type="Control" parent="UI"]
 visible = false
@@ -478,15 +389,218 @@ position = Vector2(66, 114.5)
 shape = SubResource("RectangleShape2D_6iyac")
 metadata/_edit_lock_ = true
 
+[node name="Opening" type="TextureRect" parent="UI"]
+layout_mode = 1
+offset_right = 1024.0
+offset_bottom = 768.0
+texture = ExtResource("13_fdnlq")
+expand_mode = 1
+
+[node name="Screen" type="TextureRect" parent="UI/Opening"]
+layout_mode = 1
+offset_left = 183.0
+offset_top = 58.0
+offset_right = 841.0
+offset_bottom = 716.0
+texture = ExtResource("17_b3802")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Labels" type="Control" parent="UI/Opening/Screen"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="UI/Opening/Screen/Labels"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 323.0
+offset_right = 224.0
+offset_bottom = 346.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_b3802")
+text = "Stock"
+
+[node name="Label2" type="Label" parent="UI/Opening/Screen/Labels"]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 323.0
+offset_right = 348.0
+offset_bottom = 346.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_b3802")
+text = "Price"
+
+[node name="Label3" type="Label" parent="UI/Opening/Screen/Labels"]
+layout_mode = 0
+offset_left = 402.0
+offset_top = 323.0
+offset_right = 466.0
+offset_bottom = 346.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_b3802")
+text = "Buy"
+
+[node name="Label4" type="Label" parent="UI/Opening/Screen/Labels"]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 323.0
+offset_right = 582.0
+offset_bottom = 346.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_b3802")
+text = "Cost"
+
+[node name="Stock" type="RichTextLabel" parent="UI/Opening/Screen"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 352.0
+offset_right = 257.0
+offset_bottom = 567.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/table_v_separation = 20
+theme_override_constants/line_separation = 10
+theme_override_fonts/normal_font = ExtResource("6_b3802")
+
+[node name="Price" type="RichTextLabel" parent="UI/Opening/Screen"]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 352.0
+offset_right = 381.0
+offset_bottom = 567.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/table_v_separation = 20
+theme_override_constants/line_separation = 10
+theme_override_fonts/normal_font = ExtResource("6_b3802")
+text = "$120
+$130
+$140
+$150"
+
+[node name="Cost" type="RichTextLabel" parent="UI/Opening/Screen"]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 352.0
+offset_right = 615.0
+offset_bottom = 567.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/table_v_separation = 20
+theme_override_constants/line_separation = 10
+theme_override_fonts/normal_font = ExtResource("6_b3802")
+text = "$0
+$0
+$0
+$0
+$0"
+horizontal_alignment = 2
+
+[node name="Count" type="RichTextLabel" parent="UI/Opening/Screen"]
+layout_mode = 0
+offset_left = 396.0
+offset_top = 352.0
+offset_right = 493.0
+offset_bottom = 567.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/table_v_separation = 20
+theme_override_constants/line_separation = 10
+theme_override_fonts/normal_font = ExtResource("6_b3802")
+text = "0
+0
+0
+0"
+horizontal_alignment = 1
+
+[node name="Buttons" type="Control" parent="UI/Opening/Screen"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 350.0
+offset_right = 492.0
+offset_bottom = 372.0
+operation = true
+
+[node name="Button2" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 350.0
+offset_right = 422.0
+offset_bottom = 372.0
+text = "-"
+
+[node name="Button3" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 382.0
+offset_right = 492.0
+offset_bottom = 404.0
+id = 1
+operation = true
+
+[node name="Button4" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 382.0
+offset_right = 422.0
+offset_bottom = 404.0
+text = "-"
+id = 1
+
+[node name="Button5" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 414.0
+offset_right = 492.0
+offset_bottom = 436.0
+id = 2
+operation = true
+
+[node name="Button6" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 414.0
+offset_right = 422.0
+offset_bottom = 436.0
+text = "-"
+id = 2
+
+[node name="Button7" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 446.0
+offset_right = 492.0
+offset_bottom = 468.0
+id = 3
+operation = true
+
+[node name="Button8" parent="UI/Opening/Screen/Buttons" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 446.0
+offset_right = 422.0
+offset_bottom = 468.0
+text = "-"
+id = 3
+
+[node name="OpenMarket" parent="UI/Opening/Screen" instance=ExtResource("21_pdsj5")]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 588.0
+offset_right = 583.0
+offset_bottom = 623.0
+text = "Open Market"
+script = null
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_hibaj")
 
-[connection signal="pressed" from="UI/Shorting/MOP/Fewer" to="." method="_on_fewer_pressed"]
-[connection signal="pressed" from="UI/Shorting/MOP/More" to="." method="_on_more_pressed"]
-[connection signal="pressed" from="UI/Shorting/Short" to="." method="_on_short_pressed"]
 [connection signal="pressed" from="UI/Dialog/YesNoSprite/Yes" to="." method="_on_yes_pressed"]
 [connection signal="pressed" from="UI/Dialog/YesNoSprite/No" to="." method="_on_no_pressed"]
 [connection signal="input_event" from="UI/PhoneArea" to="." method="_on_phone_area_input_event"]
+[connection signal="pressed" from="UI/Opening/Screen/OpenMarket" to="." method="_on_open_market_pressed"]
 
 [editable path="3DScene/SubViewport/Desk"]
 [editable path="3DScene/SubViewport/Desk/clock"]

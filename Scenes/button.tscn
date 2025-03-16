@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://5qaj5x3cdkdr"]
+
+[ext_resource type="FontFile" uid="uid://c7sbynh60jb8u" path="res://Assets/misc/fonts/PIXEAB__.TTF" id="1_1cmwl"]
+[ext_resource type="Script" uid="uid://dtuxqmloq7dp1" path="res://Scripts/button.gd" id="2_0kpiu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_smycg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_edukx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iju5o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0kpiu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1cmwl"]
+
+[node name="Button" type="Button"]
+offset_right = 22.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_1cmwl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_smycg")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_edukx")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_iju5o")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0kpiu")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1cmwl")
+text = "+"
+script = ExtResource("2_0kpiu")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
