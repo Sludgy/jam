@@ -3,7 +3,6 @@ extends Node
 @onready var budget_label: Label3D = $"3DScene/SubViewport/Desk/paper/DailyBudget"
 @onready var short_count_label: RichTextLabel = $UI/Opening/Screen/Count
 @onready var short_cost_label: RichTextLabel = $UI/Opening/Screen/Cost
-@onready var total_label: Label = $UI/Opening/Screen/Total
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
 @onready var graph = get_node("Graph")
 
