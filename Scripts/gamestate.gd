@@ -45,7 +45,8 @@ enum states {
 	STARTOFDAY,
 	DAYTIME,
 	ENDOFDAY,
-	SUMMARY
+	SUMMARY,
+	WINLOSE
 }
 var state: states = states.TUTORIAL
 
@@ -81,6 +82,8 @@ func _process(delta):
 			endofday()
 		states.SUMMARY:
 			summary()
+		states.WINLOSE:
+			winlose()
 
 func change_state(target_state):
 	state = target_state
@@ -120,6 +123,9 @@ func summary():
 	change_state(states.RECEIVEBUDGET)
 	reset_time()
 	days += 1
+	
+func winlose():
+	pass
 	
 func reset_time():
 	time = 0
