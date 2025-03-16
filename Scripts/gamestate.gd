@@ -114,7 +114,7 @@ func _calculate_time(delta):
 			grow_stocks()
 			graph.update_graph()
 		if (minutes % PHONE_CALL_FREQUENCY == 0):
-			if (!call_waiting):
+			if (!call_waiting) && !dialog_control.is_visible_in_tree():
 				_update_phone()
 	
 # start a phone call
@@ -123,7 +123,7 @@ func _update_phone():
 	print("YOU'RE RECEIVING A CALL")
 	# play sounds, animations etc.
 	
-# hang up
+# hang up - basically just close all dialogs and place the phone down
 func _hang_up():
 	if (dialog_control.is_visible_in_tree()):
 		$"3DScene/SubViewport/Desk/AnimationPlayer".play_backwards("phone_pickup")
