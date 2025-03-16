@@ -106,7 +106,7 @@ func _pickup_phone():
 	var call = Manager.calls.pick_random()
 	dialog_label.text = call["dialog"]
 	name_label.text = call["caller"]
-	var texture = load("res://Assets/2D/ui/portraits/"+call["caller"]+".png")
+	var texture = load("res://Assets/2D/UI/Portraits/"+call["caller"]+".png")
 	portrait_sprite.texture = texture
 	
 func _handle_dialog_choice(choice: bool):
