@@ -11,6 +11,18 @@
 [sub_resource type="Animation" id="Animation_svl0u"]
 length = 0.001
 loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("phone:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.757, 2.262, -1.566)]
+}
 
 [sub_resource type="Animation" id="Animation_dp2kn"]
 resource_name = "phone_pickup"
@@ -26,7 +38,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(-0.757285, 2.26156, -1.41121), Vector3(-1.627, 2.477, -0.761)]
+"values": [Vector3(-0.757, 2.262, -1.566), Vector3(-1.627, 2.477, -0.761)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -68,7 +80,7 @@ transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 0.256857, 2.2909,
 transform = Transform3D(-0.00559646, 0, 0.31495, 0, 0.315, 0, -0.31495, 0, -0.00559646, -0.575957, 1.63748, -0.0463989)
 
 [node name="phone" parent="." instance=ExtResource("7_5crnc")]
-transform = Transform3D(0.0800308, 0, 0.120913, 0, 0.145, 0, -0.120913, 0, 0.0800308, -0.757285, 2.26156, -1.41121)
+transform = Transform3D(0.0800308, 0, 0.120913, 0, 0.145, 0, -0.120913, 0, 0.0800308, -0.757, 2.262, -1.566)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

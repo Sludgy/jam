@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://6x6jq6c7tfvs"]
+[gd_scene load_steps=10 format=3 uid="uid://6x6jq6c7tfvs"]
 
 [ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://sb0msx0pn360" path="res://Scenes/desk.tscn" id="2_8gbba"]
 [ext_resource type="Texture2D" uid="uid://cwx7b1sis40on" path="res://Assets/2D/background/StockPlaceBase.png" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://bwut0gr2m5u1a" path="res://Scripts/graph.gd" id="3_8gbba"]
 [ext_resource type="Texture2D" uid="uid://bnblmkabios18" path="res://Assets/2D/background/bckTowers.png" id="3_kry3j"]
+[ext_resource type="Texture2D" uid="uid://cxdxdvt45vmjo" path="res://Assets/2D/background/MidTowers.png" id="4_21xkr"]
+[ext_resource type="Texture2D" uid="uid://b8p1hylv3aklg" path="res://Assets/2D/background/FrontTowers.png" id="5_6bp64"]
+[ext_resource type="Texture2D" uid="uid://dd73xb1gl8jeg" path="res://Assets/2D/background/window.png" id="6_344ge"]
 
 [sub_resource type="Environment" id="Environment_8gbba"]
 ambient_light_source = 2
@@ -30,6 +33,25 @@ scale = Vector2(0.3, 0.3)
 [node name="Sprite2D" type="Sprite2D" parent="Background/BackTowers"]
 texture = ExtResource("3_kry3j")
 
+[node name="MidTowers" type="ParallaxLayer" parent="Background"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/MidTowers"]
+position = Vector2(498, 366)
+scale = Vector2(0.36, 0.36)
+texture = ExtResource("4_21xkr")
+
+[node name="FrontTowers" type="ParallaxLayer" parent="Background"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/FrontTowers"]
+position = Vector2(501, 237)
+scale = Vector2(0.285, 0.285)
+texture = ExtResource("5_6bp64")
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_344ge")
+
 [node name="3DScene" type="SubViewportContainer" parent="."]
 offset_right = 512.0
 offset_bottom = 512.0
@@ -50,8 +72,17 @@ transform = Transform3D(1, 0, 0, 0, 0.997185, 0.0749787, 0, -0.0749787, 0.997185
 [node name="Desk" parent="3DScene/SubViewport" instance=ExtResource("2_8gbba")]
 transform = Transform3D(-1.59547e-08, 0, 0.365, 0, 0.365, 0, -0.365, 0, -1.59547e-08, 0, 0, 1.395)
 
+[node name="clock" parent="3DScene/SubViewport/Desk" index="1"]
+transform = Transform3D(0.400624, 0, 0.38409, 0, 0.555, 0, -0.38409, 0, 0.400624, 0.242452, 2.45441, -1.24209)
+
+[node name="books" parent="3DScene/SubViewport/Desk" index="2"]
+transform = Transform3D(0.128599, 0, 0.37348, 0, 0.395, 0, -0.37348, 0, 0.128599, 0.0969999, 1.696, -1.33957)
+
+[node name="pencilmug" parent="3DScene/SubViewport/Desk" index="4"]
+transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 0.467, 1.991, 0.689)
+
 [node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
-transform = Transform3D(-0.00991486, -0.105021, 0.0994853, -0.0359791, 0.0983754, 0.100264, -0.140115, -0.0178296, -0.0327858, -1.627, 2.477, -0.761)
+transform = Transform3D(0.0800309, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.080031, -0.757, 2.262, -1.566)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)

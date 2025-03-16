@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://hmj7p7nyhw63"]
+[gd_scene load_steps=19 format=4 uid="uid://hmj7p7nyhw63"]
 
 [ext_resource type="Texture2D" uid="uid://bg4xu6cjo3den" path="res://Scenes/monitor+mouse/monitor+mouse_monitor-diffuse.png" id="1_lrvoo"]
 [ext_resource type="Shader" uid="uid://c1pdks2ywt70w" path="res://Scenes/monitor+mouse/monitor+mouse.gdshader" id="1_tmxry"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cgj3thshver4v" path="res://Scenes/monitor+mouse/monitor+mouse_mouse-diffuse.png" id="3_icuen"]
 [ext_resource type="Texture2D" uid="uid://ceoy5s5761jhy" path="res://Scenes/monitor+mouse/monitor+mouse_mouse-roughness.png" id="4_i8gyt"]
 [ext_resource type="Shader" uid="uid://bca5adoly8w1i" path="res://Scenes/monitor+mouse/crt_screen.gdshader" id="6_3xgee"]
+[ext_resource type="PackedScene" uid="uid://b1o5si2ywhwww" path="res://Scenes/ui.tscn" id="7_i8gyt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ct1yg"]
 resource_name = "monitor"
@@ -197,13 +198,5 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="TextureRect" type="TextureRect" parent="SubViewport/MonitorScreen"]
+[node name="UI" parent="SubViewport/MonitorScreen" instance=ExtResource("7_i8gyt")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 180.0
-offset_bottom = 143.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(4.54, 4.54)
