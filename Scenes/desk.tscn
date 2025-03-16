@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://sb0msx0pn360"]
+
+[ext_resource type="PackedScene" uid="uid://tjqub8clp23" path="res://Assets/3D/desk/desk.glb" id="1_7rkfp"]
+[ext_resource type="PackedScene" uid="uid://bawj47q0eqq74" path="res://Assets/3D/clock/clock.glb" id="2_ygxyb"]
+[ext_resource type="PackedScene" uid="uid://lgli5ydtxfw5" path="res://Assets/3D/books/books.glb" id="3_qwyuq"]
+[ext_resource type="PackedScene" uid="uid://hmj7p7nyhw63" path="res://Scenes/monitor+mouse/monitor+mouse.tscn" id="4_dp2kn"]
+[ext_resource type="PackedScene" uid="uid://8wdq043drhfq" path="res://Assets/3D/pencilmug/pencilmug.glb" id="5_svl0u"]
+[ext_resource type="PackedScene" uid="uid://cq0p3hk0c4ysm" path="res://Assets/3D/paper/paper.glb" id="6_4pfso"]
+[ext_resource type="PackedScene" uid="uid://esjauui43w21" path="res://Assets/3D/phone/phone.glb" id="7_5crnc"]
+
+[sub_resource type="Animation" id="Animation_svl0u"]
+length = 0.001
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_dp2kn"]
+resource_name = "phone_pickup"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("phone:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.757285, 2.26156, -1.41121), Vector3(-1.627, 2.477, -0.761)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("phone:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.986111, 0), Vector3(-0.763526, 1.88914, -0.350621)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4pfso"]
+_data = {
+&"RESET": SubResource("Animation_svl0u"),
+&"phone_pickup": SubResource("Animation_dp2kn")
+}
+
+[node name="Desk" type="Node3D"]
+
+[node name="desk" parent="." instance=ExtResource("1_7rkfp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.141153, 1.19209e-07, -0.0656421)
+
+[node name="clock" parent="." instance=ExtResource("2_ygxyb")]
+transform = Transform3D(0.553894, 0, 0.0350129, 0, 0.555, 0, -0.0350129, 0, 0.553894, 0.298765, 2.09975, -0.11284)
+
+[node name="books" parent="." instance=ExtResource("3_qwyuq")]
+transform = Transform3D(0.228712, 0, 0.258294, 0, 0.345, 0, -0.258294, 0, 0.228712, 0.0969475, 1.6957, -1.25874)
+
+[node name="monitor+mouse" parent="." instance=ExtResource("4_dp2kn")]
+transform = Transform3D(0.246334, 0, 0.457952, 0, 0.52, 0, -0.457952, 0, 0.246334, 0.0139601, 2.00631, 1.48418)
+
+[node name="pencilmug" parent="." instance=ExtResource("5_svl0u")]
+transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 0.256857, 2.2909, -1.15576)
+
+[node name="paper" parent="." instance=ExtResource("6_4pfso")]
+transform = Transform3D(-0.00559646, 0, 0.31495, 0, 0.315, 0, -0.31495, 0, -0.00559646, -0.575957, 1.63748, -0.0463989)
+
+[node name="phone" parent="." instance=ExtResource("7_5crnc")]
+transform = Transform3D(0.0800308, 0, 0.120913, 0, 0.145, 0, -0.120913, 0, 0.0800308, -0.757285, 2.26156, -1.41121)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4pfso")
+}
