@@ -1,11 +1,12 @@
-[gd_scene load_steps=18 format=4 uid="uid://hmj7p7nyhw63"]
+[gd_scene load_steps=17 format=4 uid="uid://hmj7p7nyhw63"]
 
 [ext_resource type="Texture2D" uid="uid://bg4xu6cjo3den" path="res://Scenes/monitor+mouse/monitor+mouse_monitor-diffuse.png" id="1_lrvoo"]
-[ext_resource type="Shader" uid="uid://c1pdks2ywt70w" path="res://Scenes/monitor+mouse/monitor+mouse.gdshader" id="1_tmxry"]
 [ext_resource type="Texture2D" uid="uid://f82uloocq0nk" path="res://Scenes/monitor+mouse/monitor+mouse_monitor-roughness.png" id="2_2104u"]
 [ext_resource type="Texture2D" uid="uid://cgj3thshver4v" path="res://Scenes/monitor+mouse/monitor+mouse_mouse-diffuse.png" id="3_icuen"]
 [ext_resource type="Texture2D" uid="uid://ceoy5s5761jhy" path="res://Scenes/monitor+mouse/monitor+mouse_mouse-roughness.png" id="4_i8gyt"]
+[ext_resource type="Material" uid="uid://cvu8hij3ifmic" path="res://Scenes/monitor+mouse/monitor+mouse+adam.tres" id="5_i8gyt"]
 [ext_resource type="Shader" uid="uid://bca5adoly8w1i" path="res://Scenes/monitor+mouse/crt_screen.gdshader" id="6_3xgee"]
+[ext_resource type="Texture2D" uid="uid://b6vfmb56xbv8k" path="res://icon.svg" id="6_i8gyt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ct1yg"]
 resource_name = "monitor"
@@ -93,15 +94,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_l77a3")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_i8gyt"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2104u"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("1_tmxry")
-shader_parameter/screen_texture = SubResource("ViewportTexture_i8gyt")
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_dlm6m"]
 _surfaces = [{
 "aabb": AABB(-0.500637, -0.402721, -0.0274327, 1.00127, 0.805442, 0.0567731),
@@ -118,6 +110,7 @@ _surfaces = [{
 blend_shape_mode = 0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_xsgaw"]
+resource_local_to_scene = true
 resource_name = "monitor+mouse_Cube_001"
 _surfaces = [{
 "aabb": AABB(-0.500637, -0.402721, -0.0274327, 1.00127, 0.805442, 0.0567731),
@@ -126,7 +119,7 @@ _surfaces = [{
 "index_count": 384,
 "index_data": PackedByteArray("LwACADAAMAACAAMAMAADAAAALwABAAIAMQAwAAAAMQAAAAQAIgAvADAAIgAwADEAMgABAC8AMgAFAAEAMwAvACIAMwAyAC8ANAAxAAQANAAEAA0AJgAiADEAJgAxADQANQAzACIANQAiACYANgA0AA0ANgANABAAJwAmADQAJwA0ADYANwA1ACYANwAmACcAOAA2ABAAOAAQABIAKgAnADYAKgA2ADgAOQA3ACcAOQAnACoAOgA4ABIAOgASABQALgAqADgALgA4ADoAOwA5ACoAOwAqAC4APAA6ABQAPAAUAB0AHgA8AB0AHgAdAB8AGQA8AB4APQA6ADwAGQA9ADwAPQAuADoAFwA9ABkAPgAuAD0AFwA+AD0APgA7AC4AFQA+ABcAFQA/AD4APwA7AD4AFgA/ABUAPwAtADsAFgBAAD8AQAAtAD8AGABAABYALQA5ADsAGABBAEAAGwBBABgAQAAsAC0AQQAsAEAALQArADkALAArAC0AKwA3ADkAGwBCAEEAHABCABsAHAAaAEIAQgBDAEEAQQBDACwAGgBEAEIAQgBEAEMAGgATAEQALAApACsAQwApACwAKwAoADcAKQAoACsAKAA1ADcAQwBFACkARABFAEMAKQAlACgARQAlACkAKAAkADUAJQAkACgAJAAzADUAEwBGAEQARABGAEUAEwARAEYARQBHACUARgBHAEUAEQBIAEYARgBIAEcAEQAPAEgAJQAjACQARwAjACUAJAAhADMAIwAhACQAIQAyADMARwBJACMASABJAEcAIwBKACEASQBKACMAIQAgADIASgAgACEAIAAFADIAIAAGAAUASwAGACAASgBLACAASwAHAAYASQBMAEoATABLAEoATQAHAEsATABNAEsATQAIAAcATgBMAEkASABOAEkADwBOAEgADwAOAE4ATgBPAEwADgBPAE4ATwBNAEwADgAMAE8AUAAIAE0ATwBQAE0ADABQAE8AUAAKAAgADAAJAFAACQAKAFAACQALAAoA"),
 "lods": [0.00131648, PackedByteArray("AAABAAIAAAACAAMAIAABAAAAIAAFAAEAIAAGAAUAIAAHAAYAIAAIAAcACQAIACAACQAKAAgACQALAAoADAAJACAAIQAgAAAADAAgACEAIQAAACIAIgAAAAQAIwAMACEADgAMACMAJAAhACIAIwAhACQAJQAOACMAJQAjACQADwAOACUAEQAPACUAJgAiAAQAJAAiACYAJgAEAA0AEAAmAA0AJwAkACYAJwAmABAAJQAkACgAKAAkACcAEQAlACkAKQAlACgAEwARACkAKgAnABAAKwAoACcAKQAoACsAKwAnACoAEwApACwALAApACsAKgAQABIAGgATACwALQArACoALAArAC0ALgAqABIALQAqAC4ALgASABQAFgAsAC0AGAAsABYAGgAsABgAFgAtABUAFQAtAC4AGwAaABgAHAAaABsAFwAVAC4AFwAuABkALgAUAB0AGQAuAB0AGQAdAB4AHgAdAB8A"), 0.00221559, PackedByteArray("AAABAAIAAAACAAMABAABAAAABAAFAAEABAAGAAUABAAHAAYABAAIAAcACQAIAAQACQAKAAgACQALAAoADAAJAAQADQAMAAQADgAMAA0ADwAOAA0ADwANABAAEQAPABAAEQAQABIAEwARABIAEwASABQAFQATABQAFgATABUAFwAVABQAGAATABYAFwAUABkAGgATABgAGwAaABgAHAAaABsAGQAUAB0AGQAdAB4AHgAdAB8A")],
-"material": SubResource("ShaderMaterial_2104u"),
+"material": ExtResource("5_i8gyt"),
 "name": "Display",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -172,7 +165,7 @@ mesh = SubResource("ArrayMesh_3a5qh")
 skeleton = NodePath("")
 
 [node name="display" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.90872, 0.00542913, 0.000365332, 0.00456743, -2.12002, 0.426638, 0.00141008, -0.482002, -1.8765, -0.0204103, 1.82718, -0.959699)
+transform = Transform3D(-1.90873, 4.21094e-08, -1.64055e-07, 0, 2.1201, 0.426345, 1.66866e-07, 0.481675, -1.87657, -0.0204103, 1.82718, -0.959699)
 mesh = SubResource("ArrayMesh_xsgaw")
 skeleton = NodePath("")
 
@@ -185,6 +178,18 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="TextureRect" type="TextureRect" parent="SubViewport/MonitorScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 180.0
+offset_bottom = 143.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4.54, 4.54)
+texture = ExtResource("6_i8gyt")
+
 [node name="CRTEffect" type="ColorRect" parent="SubViewport/MonitorScreen"]
 material = SubResource("ShaderMaterial_icuen")
 layout_mode = 1
@@ -196,14 +201,3 @@ offset_bottom = 960.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
-
-[node name="TextureRect" type="TextureRect" parent="SubViewport/MonitorScreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 180.0
-offset_bottom = 143.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(4.54, 4.54)

@@ -45,13 +45,19 @@ size = Vector2i(1024, 769)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="3DScene/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.997185, 0.0749787, 0, -0.0749787, 0.997185, 0, 1.154, 2.29164)
+transform = Transform3D(1, 0, 0, 0, 0.997185, 0.0749787, 0, -0.0749787, 0.997185, -0.00910887, 1.154, 2.29164)
 
 [node name="Desk" parent="3DScene/SubViewport" instance=ExtResource("2_8gbba")]
 transform = Transform3D(-1.59547e-08, 0, 0.365, 0, 0.365, 0, -0.365, 0, -1.59547e-08, 0, 0, 1.395)
 
+[node name="clock" parent="3DScene/SubViewport/Desk" index="1"]
+transform = Transform3D(0.462758, 0, 0.306397, 0, 0.555, 0, -0.306397, 0, 0.462758, 0.182494, 2.35886, -1.23412)
+
+[node name="pencilmug" parent="3DScene/SubViewport/Desk" index="4"]
+transform = Transform3D(0.285, 0, 1.77636e-15, 0, 0.285, 0, -1.77636e-15, 0, 0.285, 0.309183, 2.00616, 0.470883)
+
 [node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
-transform = Transform3D(-0.00991487, -0.105021, 0.0994854, -0.0359791, 0.0983754, 0.100264, -0.140115, -0.0178296, -0.0327858, -1.627, 2.477, -0.761)
+transform = Transform3D(0.0800309, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800311, -0.757285, 2.26156, -1.63899)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)

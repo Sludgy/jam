@@ -89,8 +89,13 @@ func _calculate_time(delta):
 			grow_stocks()
 			graph.update_graph()
 		if (minutes % PHONE_CALL_FREQUENCY == 0):
-			print("phone call")
+			_update_phone()
 	_update_time(current_hour, current_minute)
+	
+# start a phone call
+func _update_phone():
+	print("Phone is calling")
+	pass
 	
 # helper function for time to text
 func _update_time(hour: int, minute: int):
