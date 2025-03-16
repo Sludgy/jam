@@ -23,3 +23,4 @@ Manager="*res://Scripts/manager.gd"
 
 window/size/viewport_width=1024
 window/size/viewport_height=768
+mouse_cursor/custom_image="uid://8nuj01i787dx"
