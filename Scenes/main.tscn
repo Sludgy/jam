@@ -1,5 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://6x6jq6c7tfvs"]
-
+[gd_scene load_steps=28 format=3 uid="uid://6x6jq6c7tfvs"]
 
 [ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://sb0msx0pn360" path="res://Scenes/desk.tscn" id="2_8gbba"]
@@ -186,12 +185,13 @@ font_size = 74
 transform = Transform3D(0.285, 0, 1.77636e-15, 0, 0.285, 0, -1.77636e-15, 0, 0.285, 0.423236, 2.00616, 0.71656)
 
 [node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
-transform = Transform3D(0.0800306, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800313, -0.757285, 2.26156, -1.41121)
+transform = Transform3D(0.0800306, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800312, -1.627, 2.53936, -0.761)
 
 [node name="phone" parent="3DScene/SubViewport/Desk/phone" index="0"]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 2.1, 0, 0, 0, 1.08385, -0.0367432, 1.74711, -0.0865536)
+transform = Transform3D(1, 1.49012e-08, 3.35276e-08, -3.72529e-09, 2.1, 0, 3.72529e-09, 0, 1.08385, -0.0845616, 1.2406, 0.393256)
 
 [node name="callLight" parent="3DScene/SubViewport/Desk/phone" index="1"]
+transform = Transform3D(0.930991, -0.364905, 0.0100501, 0.364997, 0.930957, -0.00972117, -0.00580877, 0.0127186, 0.999903, -1.53622, 3.89378, -0.108759)
 visible = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]

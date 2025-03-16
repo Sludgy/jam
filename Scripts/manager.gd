@@ -1,13 +1,13 @@
 extends Node
 
-var budget: int = 0
+var budget: int = 10000
 
 # MOP = 0, FTB = 1, WOOP = 2, YPEE = 3
 var stocks = [
-	{"id": "MOP", "name": "Moins Pauvre", "history": [90], "shorted": 0, "shorted_count": null, "delisted": false, "growth": 1.02},
-	{"id": "FTB", "name": "FRANKS TREADMILLS AND BALLISTICS LLC", "history": [130], "shorted": 0, "shorted_count": null, "delisted": false, "growth": 1.01},
-	{"id": "WOOP", "name": "Wellness Foods", "history": [40], "shorted": 0, "shorted_count": null, "delisted": false, "growth": 1.05},
-	{"id": "YPEE", "name": "Yippee!", "history": [120], "shorted": 0, "shorted_count": null, "delisted": false, "growth": 1.04},
+	{"id": "MOP", "name": "Moins Pauvre", "history": [90], "shorted": 0, "shorted_count": 0, "delisted": false, "growth": 1.02},
+	{"id": "FTB", "name": "FRANKS TREADMILLS AND BALLISTICS LLC", "history": [130], "shorted": 0, "shorted_count": 0, "delisted": false, "growth": 1.01},
+	{"id": "WOOP", "name": "Wellness Foods", "history": [40], "shorted": 0, "shorted_count": 0, "delisted": false, "growth": 1.05},
+	{"id": "YPEE", "name": "Yippee!", "history": [120], "shorted": 0, "shorted_count": 0, "delisted": false, "growth": 1.04},
 ]
 
 var calls = [

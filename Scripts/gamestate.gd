@@ -46,14 +46,15 @@ enum states {
 	RECEIVEBUDGET,
 	STARTOFDAY,
 	DAYTIME,
-	ENDOFDAY
+	ENDOFDAY,
+	SUMMARY
 }
 var state: states = states.TUTORIAL
 
 var shorting: Array[int] = [0, 0, 0, 0]
 var total: int = 0
 
-const DAILY_BUDGET = 100000
+const DAILY_BUDGET = 1000
 const KAPUT_THRESHOLD = 10
 
 var current_call = 0
@@ -77,6 +78,8 @@ func _process(delta):
 			daytime(delta)
 		states.ENDOFDAY:
 			endofday()
+		states.SUMMARY:
+			summary()
 
 func change_state(target_state):
 	state = target_state
@@ -97,17 +100,23 @@ func startofday():
 # where the action happens
 func daytime(delta):
 	_calculate_time(delta)
-	
 	if call_waiting:
 		if minutes % 2 == 0:
 			callLight.show()
 		else:
 			callLight.hide()
-	
 
 # end of day scoreboard
 func endofday():
-	pass
+	var total = 0
+	for i in Manager.stocks.size():
+		total = total + (Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]*Manager.stocks[i]["shorted_count"])
+	Manager.budget = Manager.budget - total
+	update_budget()
+	change_state(states.SUMMARY)
+	
+func summary():
+	change_state(states.RECEIVEBUDGET)
 
 func _calculate_time(delta):
 	time += delta
@@ -176,7 +185,6 @@ func _handle_dialog_choice(choice: bool):
 				else:
 					_increase_stock(i, !choice)
 			
-
 	update_stocks()
 	# display player quote
 	player_dialog_label.text = Manager.calls[current_call]["options"][int(choice)]
@@ -187,7 +195,6 @@ func _input(event):
 		if player_dialog_control.is_visible_in_tree():
 			current_call = current_call + 1
 			_hang_up()
-	
 
 func _increase_stock(id: int, decrease: bool):
 	# if we want to decrease instead, make the amount negative
