@@ -2,6 +2,7 @@ extends Node
 
 var budget: int = 0
 
+# MOP = 0, FTB = 1, WOOP = 2, YPEE = 3
 var stocks = [
 	{"id": "MOP", "name": "Moins Pauvre", "history": [90], "shorted": 0, "shorted_count": null, "delisted": false, "growth": 1.02},
 	{"id": "FTB", "name": "FRANKS TREADMILLS AND BALLISTICS LLC", "history": [130], "shorted": 0, "shorted_count": null, "delisted": false, "growth": 1.01},
