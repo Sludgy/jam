@@ -1,5 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://6x6jq6c7tfvs"]
 
+
 [ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://sb0msx0pn360" path="res://Scenes/desk.tscn" id="2_8gbba"]
 [ext_resource type="Texture2D" uid="uid://cwx7b1sis40on" path="res://Assets/2D/background/StockPlaceBase.png" id="2_jjvhh"]
@@ -13,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://1vn8qxwwkple" path="res://Assets/2D/UI/Portraits/YPEE.png" id="6_344ge"]
 [ext_resource type="FontFile" uid="uid://c7sbynh60jb8u" path="res://Assets/misc/fonts/PIXEAB__.TTF" id="6_b3802"]
 [ext_resource type="Texture2D" uid="uid://dwbvagtdvpe8j" path="res://Assets/2D/UI/yesNoBox.png" id="7_344ge"]
+[ext_resource type="Texture2D" uid="uid://r0oax7ftnhux" path="res://Assets/2D/UI/ThumbsUp.png" id="11_fevyy"]
 [ext_resource type="Texture2D" uid="uid://d0760bebdqsnf" path="res://Assets/2D/UI/replyBox.png" id="12_6iyac"]
+[ext_resource type="Texture2D" uid="uid://2pq6idelffck" path="res://Assets/2D/UI/ThumbsDown.png" id="12_hibaj"]
 [ext_resource type="Texture2D" uid="uid://b1ch3arwwd6j5" path="res://Assets/2D/UI/Computer/ComputerBorderDay.png" id="13_fdnlq"]
 [ext_resource type="Texture2D" uid="uid://cjcosxy5w04c3" path="res://Assets/2D/UI/Computer/ComputerUIbase.png" id="14_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://cif40y0a3m4rh" path="res://Assets/2D/UI/Computer/ComputerBorderNight.png" id="16_h1bgf"]
@@ -183,7 +186,10 @@ font_size = 74
 transform = Transform3D(0.285, 0, 1.77636e-15, 0, 0.285, 0, -1.77636e-15, 0, 0.285, 0.423236, 2.00616, 0.71656)
 
 [node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
-transform = Transform3D(0.0800307, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800313, -0.757285, 2.26156, -1.52299)
+transform = Transform3D(0.0800306, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800313, -0.757285, 2.26156, -1.41121)
+
+[node name="phone" parent="3DScene/SubViewport/Desk/phone" index="0"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 2.1, 0, 0, 0, 1.08385, -0.0367432, 1.74711, -0.0865536)
 
 [node name="callLight" parent="3DScene/SubViewport/Desk/phone" index="1"]
 visible = false
@@ -312,19 +318,21 @@ position = Vector2(480, 487)
 scale = Vector2(0.465278, 0.465278)
 texture = ExtResource("7_344ge")
 
-[node name="Yes" type="Button" parent="UI/Dialog/YesNoSprite"]
-offset_left = -214.925
-offset_top = -88.1193
-offset_right = -12.9254
-offset_bottom = 19.8807
-text = "Yes"
+[node name="Yes" type="TextureButton" parent="UI/Dialog/YesNoSprite"]
+offset_left = -165.492
+offset_top = -94.5671
+offset_right = -41.4924
+offset_bottom = 23.4329
+texture_normal = ExtResource("11_fevyy")
+texture_hover = ExtResource("11_fevyy")
 
-[node name="No" type="Button" parent="UI/Dialog/YesNoSprite"]
-offset_left = 12.8954
-offset_top = -34.388
-offset_right = 214.895
-offset_bottom = 73.612
-text = "No"
+[node name="No" type="TextureButton" parent="UI/Dialog/YesNoSprite"]
+offset_left = 62.3283
+offset_top = -34.3881
+offset_right = 264.328
+offset_bottom = 85.6119
+texture_normal = ExtResource("12_hibaj")
+texture_hover = ExtResource("12_hibaj")
 
 [node name="PortraitSprite" type="Sprite2D" parent="UI/Dialog"]
 position = Vector2(115, 358)
@@ -357,7 +365,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="DialogSprite" type="Sprite2D" parent="UI/PlayerDialog"]
-position = Vector2(582, 593)
+position = Vector2(617, 646)
 scale = Vector2(0.625693, 0.625693)
 texture = ExtResource("12_6iyac")
 

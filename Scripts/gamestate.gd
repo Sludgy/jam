@@ -18,6 +18,7 @@ extends Node
 @onready var portrait_sprite: Sprite2D = $UI/Dialog/PortraitSprite
 @onready var dialog_label: Label = $UI/Dialog/DialogSprite/Dialog
 @onready var name_label: Label = $UI/Dialog/DialogSprite/Name
+@onready var yes_no_sprite: Sprite2D = $UI/Dialog/YesNoSprite
 @onready var player_dialog_control: Control = $UI/PlayerDialog
 @onready var player_dialog_label: Control = $UI/PlayerDialog/DialogSprite/Dialog
 
@@ -28,17 +29,16 @@ var previous_minute: int = -1
 var minutes: int = 0
 var time: float = 0.0
 # how many in-game minutes pass each second
-const TIMESCALE: int = 6
-#const TIMESCALE: int = 30
+#const TIMESCALE: int = 6
+const TIMESCALE: int = 60
 # how many minutes it takes for a phone call to occur
 const PHONE_CALL_FREQUENCY: int = 75
 # grow stocks on the hour
 const STOCK_GROWTH_FREQUENCY: int = 60
 
 # amount to increase/decrease a stock when a choice is made
-const STOCK_INCREASE_AMOUNT: int = 50
-const STOCK_DECREASE_AMOUNT: int = 100
-
+const STOCK_INCREASE_AMOUNT: int = 5
+const STOCK_DECREASE_AMOUNT: int = 10
 
 # game state
 enum states {
@@ -114,20 +114,32 @@ func _calculate_time(delta):
 	minutes = int(time * TIMESCALE)
 	var current_minute: int = minutes % 60
 	var current_hour: int = minutes / 60
+	_update_time(current_hour, current_minute)
+	# time to clock off
+	if (current_hour == 6):
+		call_waiting = false
+		_hang_up()
+		change_state(states.ENDOFDAY)
 	if (previous_minute != minutes):
 		previous_minute = minutes
 		if (minutes % STOCK_GROWTH_FREQUENCY == 0):
 			grow_stocks()
 			graph.update_graph()
 		if (minutes % PHONE_CALL_FREQUENCY == 0):
-			_update_phone()
-	_update_time(current_hour, current_minute)
+			if (!call_waiting) && !dialog_control.is_visible_in_tree():
+				_update_phone()
 	
 # start a phone call
 func _update_phone():
 	call_waiting = true
-
 	# play sounds, animations etc.
+	
+# hang up - basically just close all dialogs and place the phone down
+func _hang_up():
+	if (dialog_control.is_visible_in_tree()):
+		$"3DScene/SubViewport/Desk/AnimationPlayer".play_backwards("phone_pickup")
+		player_dialog_control.hide()
+		dialog_control.hide()
 
 func _pickup_phone():
 	callLight.hide()
@@ -142,6 +154,7 @@ func _pickup_phone():
 	
 	await get_tree().create_timer(0.3).timeout
 	dialog_control.show()
+	yes_no_sprite.show()
 	
 func _on_phone_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
@@ -151,27 +164,41 @@ func _on_phone_area_input_event(viewport: Node, event: InputEvent, shape_idx: in
 			_pickup_phone()
 	
 # yes = 0, no = 1
-func _handle_dialog_choice(choice: int):
+func _handle_dialog_choice(choice: bool):
+	yes_no_sprite.hide()
 	# affect stocks
 	# LOOP EACH STOCK
 	for i in Manager.stocks.size():
-		# IF THE STOCK WILL BE INCREASED BY CHOOSING "YES"
-		if Manager.stocks[i]["id"] == Manager.calls[current_call]["effect"][0]:
-			# CHECK IF PLAYER CHOSE "YES"
-			if (choice == 0):
-				# INCREASE THE STOCK VALUE
-				print("increasing stock value of " + Manager.stocks[i]["id"])
-				Manager.stocks[i]["history"].append(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1] + STOCK_INCREASE_AMOUNT)
-			else:
-				# DECREASE THE STOCK VALUE
-				print("decreasing stock value of " + Manager.stocks[i]["id"])
-				Manager.stocks[i]["history"].append(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1] - STOCK_DECREASE_AMOUNT)
+		for j in Manager.calls[current_call]["effect"].size():
+			if Manager.stocks[i]["id"] == Manager.calls[current_call]["effect"][j]:
+				if (j == 0):
+					_increase_stock(i, choice)
+				else:
+					_increase_stock(i, !choice)
+			
+
 	update_stocks()
 	# display player quote
-	player_dialog_label.text = Manager.calls[current_call]["options"][choice]
+	player_dialog_label.text = Manager.calls[current_call]["options"][int(choice)]
 	player_dialog_control.show()
-	$"3DScene/SubViewport/Desk/AnimationPlayer".play_backwards("phone_pickup")
 	
+func _input(event):
+	if event is InputEventMouseButton and event.pressed:
+		if player_dialog_control.is_visible_in_tree():
+			current_call = current_call + 1
+			_hang_up()
+	
+
+func _increase_stock(id: int, decrease: bool):
+	# if we want to decrease instead, make the amount negative
+	var multiplier = 1
+	var amount = STOCK_INCREASE_AMOUNT
+	if decrease:
+		multiplier = -1
+		amount = STOCK_DECREASE_AMOUNT
+	print("CHANGE STOCK " + Manager.stocks[id]["id"] + " BY " + str(multiplier) + "*" + str(amount))
+	Manager.stocks[id]["history"].append(Manager.stocks[id]["history"][Manager.stocks[id]["history"].size()-1] + (amount*multiplier))
+
 func _on_no_pressed() -> void:
 	_handle_dialog_choice(1)
 
