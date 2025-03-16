@@ -15,8 +15,12 @@ var previous_minute: int = -1
 var minutes: int = 0
 var time: float = 0.0
 # how many in-game minutes pass each second
-@export var TIMESCALE: int = 6
-
+const TIMESCALE: int = 6
+#const TIMESCALE: int = 30
+# how many minutes it takes for a phone call to occur
+const PHONE_CALL_FREQUENCY = 75
+# grow stocks on the hour
+const STOCK_GROWTH_FREQUENCY = 60
 
 # game state
 enum states {
@@ -79,11 +83,13 @@ func _calculate_time(delta):
 	minutes = int(time * TIMESCALE)
 	var current_minute: int = minutes % 60
 	var current_hour: int = minutes / 60
-	# grow stocks on the hour
-	if (hours != current_hour):
-		hours = current_hour
-		grow_stocks()
-		graph.update_graph()
+	if (previous_minute != minutes):
+		previous_minute = minutes
+		if (minutes % STOCK_GROWTH_FREQUENCY == 0):
+			grow_stocks()
+			graph.update_graph()
+		if (minutes % PHONE_CALL_FREQUENCY == 0):
+			print("phone call")
 	_update_time(current_hour, current_minute)
 	
 # helper function for time to text
