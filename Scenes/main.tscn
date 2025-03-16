@@ -57,6 +57,9 @@ ambient_light_source = 2
 ambient_light_color = Color(0.476491, 0.579196, 0.703497, 1)
 ssao_enabled = true
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6iyac"]
+size = Vector2(178, 377)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_bo1nx")
 
@@ -145,7 +148,7 @@ font_size = 74
 transform = Transform3D(0.285, 0, 1.77636e-15, 0, 0.285, 0, -1.77636e-15, 0, 0.285, 0.423236, 2.00616, 0.71656)
 
 [node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
-transform = Transform3D(0.0800309, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800315, -0.757285, 2.26156, -1.63899)
+transform = Transform3D(0.0800307, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800313, -0.757285, 2.26156, -1.52299)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
@@ -315,12 +318,12 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Sprite2D" type="Sprite2D" parent="UI/PlayerDialog"]
+[node name="DialogSprite" type="Sprite2D" parent="UI/PlayerDialog"]
 position = Vector2(582, 593)
 scale = Vector2(0.625693, 0.625693)
 texture = ExtResource("12_6iyac")
 
-[node name="Dialog" type="Label" parent="UI/PlayerDialog/Sprite2D"]
+[node name="Dialog" type="Label" parent="UI/PlayerDialog/DialogSprite"]
 offset_left = -540.201
 offset_top = -190.189
 offset_right = 432.799
@@ -355,12 +358,20 @@ centered = false
 position = Vector2(512, 385)
 scale = Vector2(0.428, 0.428)
 texture = ExtResource("17_b3802")
+[node name="PhoneArea" type="Area2D" parent="UI"]
+position = Vector2(85, 411)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/PhoneArea"]
+position = Vector2(66, 114.5)
+shape = SubResource("RectangleShape2D_6iyac")
+metadata/_edit_lock_ = true
 
 [connection signal="pressed" from="UI/Shorting/MOP/Fewer" to="." method="_on_fewer_pressed"]
 [connection signal="pressed" from="UI/Shorting/MOP/More" to="." method="_on_more_pressed"]
 [connection signal="pressed" from="UI/Shorting/Short" to="." method="_on_short_pressed"]
 [connection signal="pressed" from="UI/Dialog/YesNoSprite/Yes" to="." method="_on_yes_pressed"]
 [connection signal="pressed" from="UI/Dialog/YesNoSprite/No" to="." method="_on_no_pressed"]
+[connection signal="input_event" from="UI/PhoneArea" to="." method="_on_phone_area_input_event"]
 
 [editable path="3DScene/SubViewport/Desk"]
 [editable path="3DScene/SubViewport/Desk/clock"]

@@ -9,9 +9,12 @@ extends Node
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
 @onready var graph = get_node("Graph")
 
+@onready var dialog_control: Control = $UI/Dialog
 @onready var portrait_sprite: Sprite2D = $UI/Dialog/PortraitSprite
 @onready var dialog_label: Label = $UI/Dialog/DialogSprite/Dialog
 @onready var name_label: Label = $UI/Dialog/DialogSprite/Name
+@onready var player_dialog_control: Control = $UI/PlayerDialog
+@onready var player_dialog_label: Control = $UI/PlayerDialog/DialogSprite/Dialog
 
 # in-game time
 var days: int = 0
@@ -23,9 +26,14 @@ var time: float = 0.0
 const TIMESCALE: int = 6
 #const TIMESCALE: int = 30
 # how many minutes it takes for a phone call to occur
-const PHONE_CALL_FREQUENCY = 75
+const PHONE_CALL_FREQUENCY: int = 75
 # grow stocks on the hour
-const STOCK_GROWTH_FREQUENCY = 60
+const STOCK_GROWTH_FREQUENCY: int = 60
+
+# amount to increase/decrease a stock when a choice is made
+const STOCK_INCREASE_AMOUNT: int = 50
+const STOCK_DECREASE_AMOUNT: int = 100
+
 
 # game state
 enum states {
@@ -43,7 +51,12 @@ var total: int = 0
 const DAILY_BUDGET = 100000
 const KAPUT_THRESHOLD = 10
 
+var current_call = 0
+var call_waiting = false
+
 func _ready():
+	# randomize calls once at the start of the game
+	Manager.calls.shuffle()
 	update_stocks()
 	change_state(states.RECEIVEBUDGET)
 	
@@ -100,19 +113,56 @@ func _calculate_time(delta):
 	
 # start a phone call
 func _update_phone():
-	print("Phone is calling")
-	_pickup_phone()
+	call_waiting = true
+	# play sounds, animations etc.
 
 func _pickup_phone():
-	var call = Manager.calls.pick_random()
-	dialog_label.text = call["dialog"]
-	name_label.text = call["caller"]
-	var texture = load("res://Assets/2D/UI/Portraits/"+call["caller"]+".png")
+	$"3DScene/SubViewport/Desk/AnimationPlayer".play("phone_pickup")
+	if (current_call != 0):
+		current_call+=1
+	var phonecall = Manager.calls[current_call]
+	dialog_label.text = phonecall["dialog"]
+	name_label.text = phonecall["caller"]
+	var texture = load("res://Assets/2D/UI/Portraits/"+phonecall["caller"]+".png")
 	portrait_sprite.texture = texture
 	
-func _handle_dialog_choice(choice: bool):
-	# no = 0, yes = 1
-	print(str(choice) + " chosen")
+	await get_tree().create_timer(0.3).timeout
+	dialog_control.show()
+	
+func _on_phone_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
+		if call_waiting:
+			call_waiting = false
+			print("Picking up phone")
+			_pickup_phone()
+	
+# yes = 0, no = 1
+func _handle_dialog_choice(choice: int):
+	# affect stocks
+	# LOOP EACH STOCK
+	for i in Manager.stocks.size():
+		# IF THE STOCK WILL BE INCREASED BY CHOOSING "YES"
+		if Manager.stocks[i]["id"] == Manager.calls[current_call]["effect"][0]:
+			# CHECK IF PLAYER CHOSE "YES"
+			if (choice == 0):
+				# INCREASE THE STOCK VALUE
+				print("increasing stock value of " + Manager.stocks[i]["id"])
+				Manager.stocks[i]["history"].append(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1] + STOCK_INCREASE_AMOUNT)
+			else:
+				# DECREASE THE STOCK VALUE
+				print("decreasing stock value of " + Manager.stocks[i]["id"])
+				Manager.stocks[i]["history"].append(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1] - STOCK_DECREASE_AMOUNT)
+	update_stocks()
+	# display player quote
+	player_dialog_label.text = Manager.calls[current_call]["options"][choice]
+	player_dialog_control.show()
+	$"3DScene/SubViewport/Desk/AnimationPlayer".play_backwards("phone_pickup")
+	
+func _on_no_pressed() -> void:
+	_handle_dialog_choice(1)
+
+func _on_yes_pressed() -> void:
+	_handle_dialog_choice(0)
 	
 # helper function for time to text
 func _update_time(hour: int, minute: int):
@@ -139,8 +189,6 @@ func _update_time(hour: int, minute: int):
 	if minute % 15 == 0:
 		clock_time.text = hour_string + ":" + minute_string
 		
-
-
 func _on_more_pressed() -> void:
 	shorting[0] += 1
 	update_shorts()
@@ -193,9 +241,4 @@ func update_stocks():
 	for i in Manager.stocks.size():
 		label_text += Manager.stocks[i]["id"] + " " + "Value: " + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
 	stocks_label.text = label_text
-
-func _on_no_pressed() -> void:
-	_handle_dialog_choice(0)
-
-func _on_yes_pressed() -> void:
-	_handle_dialog_choice(1)
+		
