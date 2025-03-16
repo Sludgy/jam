@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ceoy5s5761jhy" path="res://Scenes/monitor+mouse/monitor+mouse_mouse-roughness.png" id="4_i8gyt"]
 [ext_resource type="Material" uid="uid://cvu8hij3ifmic" path="res://Scenes/monitor+mouse/monitor+mouse+adam.tres" id="5_i8gyt"]
 [ext_resource type="Shader" uid="uid://bca5adoly8w1i" path="res://Scenes/monitor+mouse/crt_screen.gdshader" id="6_3xgee"]
-[ext_resource type="Texture2D" uid="uid://b6vfmb56xbv8k" path="res://icon.svg" id="6_i8gyt"]
+[ext_resource type="Texture2D" uid="uid://cjcosxy5w04c3" path="res://Assets/2D/UI/Computer/ComputerUIbase.png" id="6_i8gyt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ct1yg"]
 resource_name = "monitor"
@@ -178,16 +178,11 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="SubViewport/MonitorScreen"]
+[node name="UITexture" type="TextureRect" parent="SubViewport/MonitorScreen"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 180.0
-offset_bottom = 143.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(4.54, 4.54)
+offset_right = 1535.0
+offset_bottom = 1535.0
+scale = Vector2(0.65, 0.65)
 texture = ExtResource("6_i8gyt")
 
 [node name="CRTEffect" type="ColorRect" parent="SubViewport/MonitorScreen"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://sb0msx0pn360"]
 
-[ext_resource type="PackedScene" uid="uid://tjqub8clp23" path="res://Assets/3D/desk/desk.glb" id="1_7rkfp"]
-[ext_resource type="PackedScene" uid="uid://bawj47q0eqq74" path="res://Assets/3D/clock/clock.glb" id="2_ygxyb"]
+[ext_resource type="PackedScene" uid="uid://ch5lb7d6cpmxq" path="res://Assets/3D/desk/desk.glb" id="1_7rkfp"]
+[ext_resource type="PackedScene" uid="uid://dcrumkaf1jrw7" path="res://Scenes/clock.tscn" id="2_dp2kn"]
 [ext_resource type="PackedScene" uid="uid://lgli5ydtxfw5" path="res://Assets/3D/books/books.glb" id="3_qwyuq"]
 [ext_resource type="PackedScene" uid="uid://hmj7p7nyhw63" path="res://Scenes/monitor+mouse/monitor+mouse.tscn" id="4_dp2kn"]
 [ext_resource type="PackedScene" uid="uid://8wdq043drhfq" path="res://Assets/3D/pencilmug/pencilmug.glb" id="5_svl0u"]
@@ -52,8 +52,8 @@ _data = {
 [node name="desk" parent="." instance=ExtResource("1_7rkfp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.141153, 1.19209e-07, -0.0656421)
 
-[node name="clock" parent="." instance=ExtResource("2_ygxyb")]
-transform = Transform3D(0.553894, 0, 0.0350129, 0, 0.555, 0, -0.0350129, 0, 0.553894, 0.298765, 2.09975, -0.11284)
+[node name="clock" parent="." instance=ExtResource("2_dp2kn")]
+transform = Transform3D(0.545, 0, 0, 0, 0.545, 0, 0, 0, 0.545, 0.497361, 2.08119, -0.01569)
 
 [node name="books" parent="." instance=ExtResource("3_qwyuq")]
 transform = Transform3D(0.228712, 0, 0.258294, 0, 0.345, 0, -0.258294, 0, 0.228712, 0.0969475, 1.6957, -1.25874)
