@@ -54,7 +54,7 @@ enum states {
 }
 var state: states = states.TUTORIAL
 
-var shorting: Array[int] = [0, 0, 0, 0]
+var shorting: Array[int]
 var total: int = 0
 
 const DAILY_BUDGET = 1000
@@ -66,12 +66,20 @@ var call_waiting = false
 func _ready():
 	# randomize calls once at the start of the game
 	Manager.calls.shuffle()
+	_reset_shorting()
 	update_stocks()
-	change_state(states.RECEIVEBUDGET)
+	change_state(states.TUTORIAL)
 	
 	for i in buttons_control.get_children():
 		i.connect("add_subtract_button_pressed", _on_add_subtract)
 	
+func _reset_shorting():
+	#empty the array
+	shorting = []
+	#populate it with the remaining stocks (in case something gets delisted)
+	for i in Manager.stocks.size():
+		shorting.append(0)
+
 func _process(delta):
 	match state:
 		states.TUTORIAL:
@@ -109,7 +117,7 @@ func startofday():
 	# ITS HIDDEN IN THE SCENE TREE BEFORE YOU RUN THE GAME
 	# JANKY BUT TIME IS MONEY
 	if !$UI/Opening.is_visible_in_tree():
-		shorting = [0, 0, 0, 0]
+		_reset_shorting()
 		update_shorts()
 		$UI/Opening.show()
 
