@@ -1,34 +1,67 @@
-[gd_scene load_steps=5 format=3 uid="uid://6x6jq6c7tfvs"]
+[gd_scene load_steps=7 format=3 uid="uid://6x6jq6c7tfvs"]
 
 [ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
-[ext_resource type="Texture2D" uid="uid://b6vfmb56xbv8k" path="res://icon.svg" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://sb0msx0pn360" path="res://Scenes/desk.tscn" id="2_8gbba"]
+[ext_resource type="Texture2D" uid="uid://cwx7b1sis40on" path="res://Assets/2D/background/StockPlaceBase.png" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://bwut0gr2m5u1a" path="res://Scripts/graph.gd" id="3_8gbba"]
+[ext_resource type="Texture2D" uid="uid://bnblmkabios18" path="res://Assets/2D/background/bckTowers.png" id="3_kry3j"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_jjgbg"]
+[sub_resource type="Environment" id="Environment_8gbba"]
+ambient_light_source = 2
+ambient_light_color = Color(0.476491, 0.579196, 0.703497, 1)
+ssao_enabled = true
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_bo1nx")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.314316, 0.314316, 0.314316, 1)
-position = Vector2(508, 384.844)
-scale = Vector2(7.46875, 5.42432)
-texture = ExtResource("1_jjgbg")
+[node name="Background" type="ParallaxBackground" parent="."]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="BaseLayer" type="ParallaxLayer" parent="Background"]
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="Background/BaseLayer"]
+position = Vector2(505, 431)
+scale = Vector2(0.435, 0.435)
+texture = ExtResource("2_jjvhh")
+
+[node name="BackTowers" type="ParallaxLayer" parent="Background"]
+position = Vector2(490, 403)
+scale = Vector2(0.3, 0.3)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/BackTowers"]
+texture = ExtResource("3_kry3j")
+
+[node name="3DScene" type="SubViewportContainer" parent="."]
+offset_right = 512.0
+offset_bottom = 512.0
+size_flags_horizontal = 4
+
+[node name="SubViewport" type="SubViewport" parent="3DScene"]
 transparent_bg = true
 handle_input_locally = false
+msaa_3d = 2
+screen_space_aa = 1
+use_occlusion_culling = true
+size = Vector2i(1024, 769)
 render_target_update_mode = 4
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
-mesh = SubResource("BoxMesh_jjgbg")
+[node name="Camera3D" type="Camera3D" parent="3DScene/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.997185, 0.0749787, 0, -0.0749787, 0.997185, 0, 1.154, 2.29164)
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.924878, 0.380263, 0, -0.380263, 0.924878, 0, 0.929171, 2.36018)
+[node name="Desk" parent="3DScene/SubViewport" instance=ExtResource("2_8gbba")]
+transform = Transform3D(-1.59547e-08, 0, 0.365, 0, 0.365, 0, -0.365, 0, -1.59547e-08, 0, 0, 1.395)
+
+[node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
+transform = Transform3D(-0.00991487, -0.105021, 0.0994854, -0.0359791, 0.0983754, 0.100264, -0.140115, -0.0178296, -0.0327858, -1.627, 2.477, -0.761)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
+light_color = Color(0.710352, 0.602439, 0.574294, 1)
+light_energy = 3.0
+shadow_enabled = true
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="3DScene/SubViewport"]
+environment = SubResource("Environment_8gbba")
 
 [node name="Graph" type="Node2D" parent="."]
 position = Vector2(508, 381)
@@ -45,7 +78,12 @@ layout_mode = 0
 offset_left = 675.0
 offset_right = 1026.0
 offset_bottom = 153.0
-text = "This is where stocks are displayed"
+text = "TEST
+Stock 1
+Stock 2
+Stock 3
+Stock 4
+Stock 5"
 
 [node name="Budget" type="Label" parent="UI"]
 layout_mode = 0
@@ -62,7 +100,6 @@ offset_bottom = 23.0
 text = "DAY/TIME"
 
 [node name="Shorting" type="VBoxContainer" parent="UI"]
-visible = false
 layout_mode = 0
 offset_left = 675.0
 offset_top = 275.0
@@ -71,7 +108,6 @@ offset_bottom = 518.0
 
 [node name="Columns" type="HBoxContainer" parent="UI/Shorting"]
 layout_mode = 2
-alignment = 2
 
 [node name="Stock" type="Label" parent="UI/Shorting/Columns"]
 layout_mode = 2
@@ -91,7 +127,6 @@ text = "Cost"
 
 [node name="MOP" type="HBoxContainer" parent="UI/Shorting"]
 layout_mode = 2
-alignment = 2
 
 [node name="Stock" type="Label" parent="UI/Shorting/MOP"]
 layout_mode = 2
@@ -120,7 +155,6 @@ text = "$0"
 [node name="Total" type="Label" parent="UI/Shorting"]
 layout_mode = 2
 text = "$0"
-horizontal_alignment = 2
 
 [node name="Short" type="Button" parent="UI/Shorting"]
 layout_mode = 2
@@ -129,3 +163,5 @@ text = "START NEXT DAY"
 [connection signal="pressed" from="UI/Shorting/MOP/Fewer" to="." method="_on_fewer_pressed"]
 [connection signal="pressed" from="UI/Shorting/MOP/More" to="." method="_on_more_pressed"]
 [connection signal="pressed" from="UI/Shorting/Short" to="." method="_on_short_pressed"]
+
+[editable path="3DScene/SubViewport/Desk"]
