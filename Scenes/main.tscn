@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://6x6jq6c7tfvs"]
+[gd_scene load_steps=30 format=3 uid="uid://6x6jq6c7tfvs"]
 
 [ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://sb0msx0pn360" path="res://Scenes/desk.tscn" id="2_8gbba"]
@@ -25,12 +25,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_b3802"]
 font = ExtResource("6_b3802")
 font_size = 26
-font_color = Color(0.720467, 0.720468, 0.720467, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_fevyy"]
-font = ExtResource("6_b3802")
-font_size = 26
-font_color = Color(0.721569, 0.721569, 0.721569, 1)
+font_color = Color(0.67, 0.67, 0.67, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s7hhp"]
 albedo_color = Color(0, 0, 0, 1)
@@ -70,6 +65,11 @@ shadow_mesh = SubResource("ArrayMesh_npfk4")
 ambient_light_source = 2
 ambient_light_color = Color(0.476491, 0.579196, 0.703497, 1)
 ssao_enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_pdsj5"]
+font = ExtResource("6_b3802")
+font_size = 26
+font_color = Color(0.18359, 0.183591, 0.18359, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6iyac"]
 size = Vector2(178, 377)
@@ -118,6 +118,7 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("5_h1bgf")
 
 [node name="TickerName" type="Label" parent="Background/TickerBoard"]
+visible = false
 offset_left = 189.0
 offset_top = 31.0
 offset_right = 306.0
@@ -129,17 +130,28 @@ WOOP
 YPEE"
 label_settings = SubResource("LabelSettings_b3802")
 
-[node name="TickerBudget" type="Label" parent="Background/TickerBoard"]
-offset_left = 716.0
-offset_top = 29.0
-offset_right = 762.0
-offset_bottom = 186.0
-scale = Vector2(0.941176, 1.3617)
-text = "$0
-$0
-$0
-$0"
-label_settings = SubResource("LabelSettings_fevyy")
+[node name="TickerColor" type="RichTextLabel" parent="Background/TickerBoard"]
+offset_left = 192.0
+offset_top = 28.0
+offset_right = 309.0
+offset_bottom = 176.0
+scale = Vector2(1.12974, 1.47176)
+theme_override_fonts/normal_font = ExtResource("6_b3802")
+theme_override_font_sizes/normal_font_size = 26
+bbcode_enabled = true
+autowrap_mode = 0
+
+[node name="TickerBudget" type="RichTextLabel" parent="Background/TickerBoard"]
+offset_left = 714.0
+offset_top = 27.0
+offset_right = 831.0
+offset_bottom = 175.0
+scale = Vector2(1.12974, 1.47176)
+theme_override_fonts/normal_font = ExtResource("6_b3802")
+theme_override_font_sizes/normal_font_size = 26
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
 
 [node name="FrontTowers" type="ParallaxLayer" parent="Background"]
 position = Vector2(4, -109)
@@ -148,6 +160,11 @@ position = Vector2(4, -109)
 position = Vector2(512, 314)
 scale = Vector2(0.335, 0.335)
 texture = ExtResource("5_344ge")
+
+[node name="Graph" type="Node2D" parent="Background"]
+position = Vector2(350, 242)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("3_8gbba")
 
 [node name="Window" type="ParallaxLayer" parent="Background"]
 position = Vector2(4, -109)
@@ -195,17 +212,18 @@ transform = Transform3D(0.285, 0, 1.77636e-15, 0, 0.285, 0, -1.77636e-15, 0, 0.2
 transform = Transform3D(-0.303002, 0, 0.0861067, 0, 0.315, 0, -0.0861067, 0, -0.303002, -0.575957, 1.63748, -0.0463989)
 
 [node name="DailyBudget" parent="3DScene/SubViewport/Desk/paper" index="1"]
-transform = Transform3D(-0.213832, -0.976863, -0.00379972, -0.0177666, -4.42189e-08, 0.999842, -0.976709, 0.213866, -0.0173556, -0.243304, 1.28457, 0.034658)
+transform = Transform3D(-0.254248, -1.44339, -0.00381306, -0.0211246, -6.53368e-08, 1.00335, -1.16131, 0.316004, -0.0174165, -0.0219727, 1.28457, -0.0282404)
 text = "Today's Budget"
+outline_size = 10
 
 [node name="phone" parent="3DScene/SubViewport/Desk" index="6"]
-transform = Transform3D(0.0800306, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800312, -1.627, 2.53936, -0.761)
+transform = Transform3D(0.0800306, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.0800312, -0.757285, 2.26156, -1.41121)
 
 [node name="phone" parent="3DScene/SubViewport/Desk/phone" index="0"]
 transform = Transform3D(1, 1.49012e-08, 3.35276e-08, -3.72529e-09, 2.1, 0, 3.72529e-09, 0, 1.08385, -0.0845616, 1.2406, 0.393256)
 
 [node name="callLight" parent="3DScene/SubViewport/Desk/phone" index="1"]
-transform = Transform3D(0.930991, -0.364905, 0.0100501, 0.364997, 0.930957, -0.00972117, -0.00580877, 0.0127186, 0.999903, -1.53622, 3.89378, -0.108759)
+transform = Transform3D(0.930991, -0.364905, 0.0100497, 0.364997, 0.930957, -0.00972117, -0.00580886, 0.0127186, 0.999902, -1.4532, 3.24513, 0.408833)
 visible = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]
@@ -223,10 +241,6 @@ environment = SubResource("Environment_8gbba")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00541019, 1.55749, 1.42349)
 light_color = Color(1, 0.813271, 0.553227, 1)
 light_energy = 3.0
-
-[node name="Graph" type="Node2D" parent="."]
-position = Vector2(508, 380)
-script = ExtResource("3_8gbba")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -406,6 +420,27 @@ position = Vector2(512, 385)
 scale = Vector2(0.428, 0.428)
 texture = ExtResource("14_jkdf5")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/DayScreen"]
+layout_mode = 0
+offset_left = 338.0
+offset_top = 405.0
+offset_right = 378.0
+offset_bottom = 445.0
+bbcode_enabled = true
+
+[node name="StockName" type="Label" parent="UI/DayScreen"]
+layout_mode = 0
+offset_left = 338.0
+offset_top = 405.0
+offset_right = 455.0
+offset_bottom = 562.0
+scale = Vector2(0.840141, 0.784058)
+text = "MOP
+FTB
+WOOP
+YPEE"
+label_settings = SubResource("LabelSettings_pdsj5")
+
 [node name="NightScreen" type="Control" parent="UI"]
 visible = false
 anchors_preset = 0
@@ -421,6 +456,19 @@ centered = false
 position = Vector2(512, 385)
 scale = Vector2(0.428, 0.428)
 texture = ExtResource("17_b3802")
+
+[node name="StockName" type="Label" parent="UI/NightScreen"]
+layout_mode = 0
+offset_left = 338.0
+offset_top = 405.0
+offset_right = 455.0
+offset_bottom = 562.0
+scale = Vector2(0.840141, 0.784058)
+text = "MOP
+FTB
+WOOP
+YPEE"
+label_settings = SubResource("LabelSettings_pdsj5")
 
 [node name="PhoneArea" type="Area2D" parent="UI"]
 position = Vector2(85, 411)

@@ -6,10 +6,11 @@ extends Node
 @onready var short_cost_label: Label = $UI/Shorting/MOP/Cost
 @onready var total_label: Label = $UI/Shorting/Total
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
-@onready var graph = get_node("Graph")
+@onready var graph = get_node("Background/Graph")
 
+@onready var ticker_color: RichTextLabel = $Background/TickerBoard/TickerColor
 @onready var ticker_name: Label = $Background/TickerBoard/TickerName
-@onready var ticker_budget : Label = $Background/TickerBoard/TickerBudget
+@onready var ticker_budget : RichTextLabel = $Background/TickerBoard/TickerBudget
 @onready var callLight : MeshInstance3D = $"3DScene/SubViewport/Desk/phone/callLight"
 
 
@@ -99,6 +100,7 @@ func startofday():
 # where the action happens
 func daytime(delta):
 	_calculate_time(delta)
+	
 	if call_waiting:
 		if minutes % 2 == 0:
 			callLight.show()
@@ -273,6 +275,7 @@ func _on_short_pressed() -> void:
 
 func update_budget():
 	budget_label.text = "Today's Budget " + "\n" + "$" + str(Manager.budget)
+	
 
 func grow_stocks():
 	for i in Manager.stocks.size():
@@ -287,13 +290,16 @@ func update_stocks():
 	var name_text: String = ""
 	var budget_text: String = ""
 	for i in Manager.stocks.size():
+		var text_color = str(Manager.stocks[i]["graph_color"])
 		label_text += Manager.stocks[i]["id"] + " " + "Value: " + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
-		name_text += Manager.stocks[i]["id"] + "\n"
-		budget_text += "$" + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
+		name_text += "[color=" + Manager.stocks[i]["text_color"] +"]" + Manager.stocks[i]["id"] + "[/color]"+ "\n"
+		budget_text += "[color=" + Manager.stocks[i]["text_color"] + "]" + "$" + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "[/color]"+ "\n"
 		
-		
-	ticker_name.text = name_text
-	ticker_budget.text = budget_text
+	ticker_color.clear()
+	ticker_budget.clear()
+	
+	ticker_color.append_text(name_text)
+	ticker_budget.append_text(budget_text)
 	stocks_label.text = label_text
 	
 	

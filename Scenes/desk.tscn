@@ -85,7 +85,7 @@ font_size = 52
 outline_size = 0
 
 [node name="phone" parent="." instance=ExtResource("7_5crnc")]
-transform = Transform3D(0.0800308, 0, 0.120913, 0, 0.145, 0, -0.120913, 0, 0.0800308, -0.757285, 2.26156, -1.41121)
+transform = Transform3D(0.0800306, 0, 0.120913, 0, 0.145, 0, -0.120913, 0, 0.0800306, -0.757285, 2.26156, -1.41121)
 
 [node name="callLight" type="MeshInstance3D" parent="phone"]
 transform = Transform3D(0.930991, -0.364905, 0.0100501, 0.364997, 0.930957, -0.00972117, -0.0058088, 0.0127186, 0.999903, -2.31708, 3.89378, 0.408075)
