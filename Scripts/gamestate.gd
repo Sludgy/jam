@@ -1,7 +1,6 @@
 extends Node
 
-@onready var time_label: Label = $UI/Time
-@onready var budget_label: Label = $UI/Budget
+@onready var budget_label: Label3D = $"3DScene/SubViewport/Desk/paper/DailyBudget"
 @onready var stocks_label: Label = $UI/Stocks
 @onready var short_count_label: Label = $UI/Shorting/MOP/Count
 @onready var short_cost_label: Label = $UI/Shorting/MOP/Cost
@@ -233,7 +232,6 @@ func _update_time(hour: int, minute: int):
 		minute_string = "0" + str(minute)
 	else:
 		minute_string = str(minute)
-	time_label.text = hour_string + ":" + minute_string + " " + meridiem
 	if minute % 15 == 0:
 		clock_time.text = hour_string + ":" + minute_string
 		
@@ -274,7 +272,7 @@ func _on_short_pressed() -> void:
 		change_state(states.DAYTIME)
 
 func update_budget():
-	budget_label.text = "Budget: $" + str(Manager.budget)
+	budget_label.text = "Today's Budget " + "\n" + "$" + str(Manager.budget)
 
 func grow_stocks():
 	for i in Manager.stocks.size():

@@ -76,6 +76,14 @@ transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 0.256857, 2.2909,
 [node name="paper" parent="." instance=ExtResource("6_4pfso")]
 transform = Transform3D(-0.00559646, 0, 0.31495, 0, 0.315, 0, -0.31495, 0, -0.00559646, -0.575957, 1.63748, -0.0463989)
 
+[node name="DailyBudget" type="Label3D" parent="paper"]
+transform = Transform3D(-0.992069, -0.12445, -0.0176285, -0.0177666, -4.39669e-08, 0.999842, -0.12443, 0.992226, -0.00221102, -0.0204304, 1.28457, 0.140848)
+modulate = Color(0.356074, 0.145439, 0.00579225, 1)
+text = "Daily Budget
+$100000"
+font_size = 52
+outline_size = 0
+
 [node name="phone" parent="." instance=ExtResource("7_5crnc")]
 transform = Transform3D(0.0800308, 0, 0.120913, 0, 0.145, 0, -0.120913, 0, 0.0800308, -0.757285, 2.26156, -1.41121)
 
