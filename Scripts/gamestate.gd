@@ -39,7 +39,8 @@ var state: states = states.TUTORIAL
 var shorting: Array[int] = [0, 0, 0, 0]
 var total: int = 0
 
-const DAILY_BUDGET = 1000
+const DAILY_BUDGET = 100000
+const KAPUT_THRESHOLD = 10
 
 func _ready():
 	update_stocks()

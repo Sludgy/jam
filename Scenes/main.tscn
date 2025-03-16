@@ -204,11 +204,18 @@ scale = Vector2(0.465278, 0.465278)
 texture = ExtResource("7_344ge")
 
 [node name="Yes" type="Button" parent="UI/Dialog/YesNoSprite"]
-offset_left = -238.567
+offset_left = -214.925
 offset_top = -88.1193
-offset_right = -36.5672
+offset_right = -12.9254
 offset_bottom = 19.8807
 text = "Yes"
+
+[node name="No" type="Button" parent="UI/Dialog/YesNoSprite"]
+offset_left = 12.8954
+offset_top = -34.388
+offset_right = 214.895
+offset_bottom = 73.612
+text = "No"
 
 [connection signal="pressed" from="UI/Shorting/MOP/Fewer" to="." method="_on_fewer_pressed"]
 [connection signal="pressed" from="UI/Shorting/MOP/More" to="." method="_on_more_pressed"]
