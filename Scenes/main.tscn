@@ -1,4 +1,5 @@
-[gd_scene load_steps=25 format=3 uid="uid://6x6jq6c7tfvs"]
+[gd_scene load_steps=26 format=3 uid="uid://6x6jq6c7tfvs"]
+
 
 [ext_resource type="Script" uid="uid://bb0danggm3i2r" path="res://Scripts/gamestate.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://sb0msx0pn360" path="res://Scenes/desk.tscn" id="2_8gbba"]
@@ -11,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cw4ssttixf8jw" path="res://Assets/2D/background/TickerBoardFlat.png" id="5_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://bq4avv2xvat5d" path="res://Assets/2D/UI/textBoxWCodeBox.png" id="6_6bp64"]
 [ext_resource type="Texture2D" uid="uid://1vn8qxwwkple" path="res://Assets/2D/UI/Portraits/YPEE.png" id="6_344ge"]
+[ext_resource type="FontFile" uid="uid://c7sbynh60jb8u" path="res://Assets/misc/fonts/PIXEAB__.TTF" id="6_b3802"]
 [ext_resource type="Texture2D" uid="uid://dwbvagtdvpe8j" path="res://Assets/2D/UI/yesNoBox.png" id="7_344ge"]
 [ext_resource type="Texture2D" uid="uid://r0oax7ftnhux" path="res://Assets/2D/UI/ThumbsUp.png" id="11_fevyy"]
 [ext_resource type="Texture2D" uid="uid://d0760bebdqsnf" path="res://Assets/2D/UI/replyBox.png" id="12_6iyac"]
@@ -19,6 +21,16 @@
 [ext_resource type="Texture2D" uid="uid://cjcosxy5w04c3" path="res://Assets/2D/UI/Computer/ComputerUIbase.png" id="14_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://cif40y0a3m4rh" path="res://Assets/2D/UI/Computer/ComputerBorderNight.png" id="16_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://dug1ph4hub3o1" path="res://Assets/2D/UI/Computer/ComputerUIbaseNIGHT.png" id="17_b3802"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_b3802"]
+font = ExtResource("6_b3802")
+font_size = 26
+font_color = Color(0.720467, 0.720468, 0.720467, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fevyy"]
+font = ExtResource("6_b3802")
+font_size = 26
+font_color = Color(0.721569, 0.721569, 0.721569, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s7hhp"]
 albedo_color = Color(0, 0, 0, 1)
@@ -96,15 +108,39 @@ texture = ExtResource("4_6bp64")
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/TickerBoard"]
 position = Vector2(521, 137)
-scale = Vector2(0.22, 0.22)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("5_h1bgf")
+
+[node name="TickerName" type="Label" parent="Background/TickerBoard"]
+offset_left = 189.0
+offset_top = 31.0
+offset_right = 306.0
+offset_bottom = 54.0
+scale = Vector2(1.2069, 1.33655)
+text = "MOP
+FTB
+WOOP
+YPEE"
+label_settings = SubResource("LabelSettings_b3802")
+
+[node name="TickerBudget" type="Label" parent="Background/TickerBoard"]
+offset_left = 716.0
+offset_top = 29.0
+offset_right = 762.0
+offset_bottom = 186.0
+scale = Vector2(0.941176, 1.3617)
+text = "$0
+$0
+$0
+$0"
+label_settings = SubResource("LabelSettings_fevyy")
 
 [node name="FrontTowers" type="ParallaxLayer" parent="Background"]
 position = Vector2(4, -109)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/FrontTowers"]
 position = Vector2(512, 314)
-scale = Vector2(0.29, 0.29)
+scale = Vector2(0.335, 0.335)
 texture = ExtResource("5_344ge")
 
 [node name="Window" type="ParallaxLayer" parent="Background"]
@@ -154,6 +190,9 @@ transform = Transform3D(0.0800306, 0, 0.120914, 0, 0.145, 0, -0.120913, 0, 0.080
 
 [node name="phone" parent="3DScene/SubViewport/Desk/phone" index="0"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 2.1, 0, 0, 0, 1.08385, -0.0367432, 1.74711, -0.0865536)
+
+[node name="callLight" parent="3DScene/SubViewport/Desk/phone" index="1"]
+visible = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3DScene/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0)
