@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://cwx7b1sis40on" path="res://Assets/2D/background/StockPlaceBase.png" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://bwut0gr2m5u1a" path="res://Scripts/graph.gd" id="3_8gbba"]
 [ext_resource type="Texture2D" uid="uid://bnblmkabios18" path="res://Assets/2D/background/bckTowers.png" id="3_kry3j"]
+[ext_resource type="Texture2D" uid="uid://bq4avv2xvat5d" path="res://Assets/2D/UI/textBoxWCodeBox.png" id="6_6bp64"]
+[ext_resource type="Texture2D" uid="uid://1vn8qxwwkple" path="res://Assets/2D/UI/Portraits/YPEE.png" id="6_344ge"]
+[ext_resource type="Texture2D" uid="uid://dwbvagtdvpe8j" path="res://Assets/2D/UI/yesNoBox.png" id="7_344ge"]
 [ext_resource type="Texture2D" uid="uid://cxdxdvt45vmjo" path="res://Assets/2D/background/MidTowers.png" id="4_6bp64"]
 [ext_resource type="Texture2D" uid="uid://dd73xb1gl8jeg" path="res://Assets/2D/background/window.png" id="4_21xkr"]
 [ext_resource type="Texture2D" uid="uid://b8p1hylv3aklg" path="res://Assets/2D/background/FrontTowers.png" id="5_344ge"]
@@ -244,9 +247,59 @@ text = "$0"
 layout_mode = 2
 text = "START NEXT DAY"
 
+[node name="Dialog" type="Control" parent="UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PortraitSprite" type="Sprite2D" parent="UI/Dialog"]
+position = Vector2(115, 358)
+scale = Vector2(0.25025, 0.25025)
+texture = ExtResource("6_344ge")
+
+[node name="DialogSprite" type="Sprite2D" parent="UI/Dialog"]
+position = Vector2(478, 392)
+scale = Vector2(0.607579, 0.607579)
+texture = ExtResource("6_6bp64")
+
+[node name="Dialog" type="Label" parent="UI/Dialog/DialogSprite"]
+offset_left = -429.573
+offset_top = -131.67
+offset_right = 543.427
+offset_bottom = 16.33
+autowrap_mode = 2
+
+[node name="Name" type="Label" parent="UI/Dialog/DialogSprite"]
+offset_left = 82.2938
+offset_top = 32.9175
+offset_right = 410.294
+offset_bottom = 91.9175
+text = "TEST TEXT HERE"
+
+[node name="YesNoSprite" type="Sprite2D" parent="UI/Dialog"]
+position = Vector2(480, 487)
+scale = Vector2(0.465278, 0.465278)
+texture = ExtResource("7_344ge")
+
+[node name="Yes" type="Button" parent="UI/Dialog/YesNoSprite"]
+offset_left = -214.925
+offset_top = -88.1193
+offset_right = -12.9254
+offset_bottom = 19.8807
+text = "Yes"
+
+[node name="No" type="Button" parent="UI/Dialog/YesNoSprite"]
+offset_left = 12.8954
+offset_top = -34.388
+offset_right = 214.895
+offset_bottom = 73.612
+text = "No"
+
 [connection signal="pressed" from="UI/Shorting/MOP/Fewer" to="." method="_on_fewer_pressed"]
 [connection signal="pressed" from="UI/Shorting/MOP/More" to="." method="_on_more_pressed"]
 [connection signal="pressed" from="UI/Shorting/Short" to="." method="_on_short_pressed"]
+[connection signal="pressed" from="UI/Dialog/YesNoSprite/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="UI/Dialog/YesNoSprite/No" to="." method="_on_no_pressed"]
 
 [editable path="3DScene/SubViewport/Desk"]
 [editable path="3DScene/SubViewport/Desk/clock"]

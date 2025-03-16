@@ -8,7 +8,9 @@ extends Node
 @onready var total_label: Label = $UI/Shorting/Total
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
 @onready var graph = get_node("Graph")
-
+@onready var portrait_sprite: Sprite2D = $UI/Dialog/PortraitSprite
+@onready var dialog_label: Label = $UI/Dialog/DialogSprite/Dialog
+@onready var name_label: Label = $UI/Dialog/DialogSprite/Name
 
 # in-game time
 var days: int = 0
@@ -37,7 +39,8 @@ var state: states = states.TUTORIAL
 var shorting: Array[int] = [0, 0, 0, 0]
 var total: int = 0
 
-const DAILY_BUDGET = 1000
+const DAILY_BUDGET = 100000
+const KAPUT_THRESHOLD = 10
 
 func _ready():
 	update_stocks()
@@ -97,7 +100,18 @@ func _calculate_time(delta):
 # start a phone call
 func _update_phone():
 	print("Phone is calling")
-	pass
+	_pickup_phone()
+
+func _pickup_phone():
+	var call = Manager.calls.pick_random()
+	dialog_label.text = call["dialog"]
+	name_label.text = call["caller"]
+	var texture = load("res://Assets/2D/UI/Portraits/"+call["caller"]+".png")
+	portrait_sprite.texture = texture
+	
+func _handle_dialog_choice(choice: bool):
+	# no = 0, yes = 1
+	print(str(choice) + " chosen")
 	
 # helper function for time to text
 func _update_time(hour: int, minute: int):
@@ -147,8 +161,8 @@ func update_shorts():
 
 func _on_short_pressed() -> void:
 	# short stocks
-	# cant short more than 150% of your budget
-	if total <= Manager.budget*1.5:
+	# cant short more than 200% of your budget
+	if total <= Manager.budget*2:
 		# sell the stocks
 		for i in shorting.size():
 			if shorting[i] != 0:
@@ -178,3 +192,9 @@ func update_stocks():
 	for i in Manager.stocks.size():
 		label_text += Manager.stocks[i]["id"] + " " + "Value: " + str(Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]) + "\n"
 	stocks_label.text = label_text
+
+func _on_no_pressed() -> void:
+	_handle_dialog_choice(0)
+
+func _on_yes_pressed() -> void:
+	_handle_dialog_choice(1)
