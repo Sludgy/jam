@@ -8,6 +8,7 @@ extends Node
 @onready var total_label: Label = $UI/Shorting/Total
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
 @onready var graph = get_node("Graph")
+
 @onready var portrait_sprite: Sprite2D = $UI/Dialog/PortraitSprite
 @onready var dialog_label: Label = $UI/Dialog/DialogSprite/Dialog
 @onready var name_label: Label = $UI/Dialog/DialogSprite/Name
