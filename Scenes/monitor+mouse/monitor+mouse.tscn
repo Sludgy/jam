@@ -118,6 +118,7 @@ _surfaces = [{
 blend_shape_mode = 0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_xsgaw"]
+resource_local_to_scene = true
 resource_name = "monitor+mouse_Cube_001"
 _surfaces = [{
 "aabb": AABB(-0.500637, -0.402721, -0.0274327, 1.00127, 0.805442, 0.0567731),
