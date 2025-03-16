@@ -4,9 +4,12 @@ var LINE_WIDTH = 2
 var LINE_COLOUR_BULLISH = Color.GREEN
 var LINE_COLOUR_BEARISH = Color.RED
 var POINT_SPACING = 20
-
-# TODO update graph every hour
-func _ready() -> void:
+	
+func update_graph():
+	# clear the old graph and prepare to redraw it
+	# not very efficient but time is money
+	for i in range(0, get_child_count()):
+		get_child(i).queue_free()
 	for i in Manager.stocks.size():
 		plot_graph(Manager.stocks[i])
 

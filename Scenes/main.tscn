@@ -8,6 +8,7 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_bo1nx")
+TIMESCALE = 20
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.314316, 0.314316, 0.314316, 1)
@@ -45,12 +46,7 @@ layout_mode = 0
 offset_left = 675.0
 offset_right = 1026.0
 offset_bottom = 153.0
-text = "TEST
-Stock 1
-Stock 2
-Stock 3
-Stock 4
-Stock 5"
+text = "This is where stocks are displayed"
 
 [node name="Budget" type="Label" parent="UI"]
 layout_mode = 0
@@ -67,6 +63,7 @@ offset_bottom = 23.0
 text = "DAY/TIME"
 
 [node name="Shorting" type="VBoxContainer" parent="UI"]
+visible = false
 layout_mode = 0
 offset_left = 675.0
 offset_top = 275.0
