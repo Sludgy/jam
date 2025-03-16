@@ -1,6 +1,7 @@
 extends Node
 
 @onready var budget_label: Label3D = $"3DScene/SubViewport/Desk/paper/DailyBudget"
+@onready var stock_name_label: RichTextLabel = $UI/Opening/Screen/Stock
 @onready var short_count_label: RichTextLabel = $UI/Opening/Screen/Count
 @onready var short_cost_label: RichTextLabel = $UI/Opening/Screen/Cost
 @onready var clock_time: Label3D = $"3DScene/SubViewport/Desk/clock/Time"
@@ -46,7 +47,8 @@ enum states {
 	DAYTIME,
 	ENDOFDAY,
 	SUMMARY,
-	WINLOSE
+	WIN,
+	LOSE
 }
 var state: states = states.TUTORIAL
 
@@ -82,8 +84,10 @@ func _process(delta):
 			endofday()
 		states.SUMMARY:
 			summary()
-		states.WINLOSE:
-			winlose()
+		states.WIN:
+			win()
+		states.LOSE:
+			lose()
 
 func change_state(target_state):
 	state = target_state
@@ -99,7 +103,11 @@ func receive_budget():
 
 # short a stock
 func startofday():
-	$UI/Opening.show()
+	# reset shortlist
+	if !$UI/Opening.is_visible_in_tree():
+		shorting = [0, 0, 0, 0]
+		update_shorts()
+		$UI/Opening.show()
 
 # where the action happens
 func daytime(delta):
@@ -124,7 +132,10 @@ func summary():
 	reset_time()
 	days += 1
 	
-func winlose():
+func lose():
+	pass
+	
+func win():
 	pass
 	
 func reset_time():
@@ -269,14 +280,17 @@ func _on_add_subtract(id: int, operation: bool):
 	
 func update_shorts():
 	total = 0
-	var cost_text: String = ""
+	var name_text: String = ""
 	var count_text: String = ""
+	var cost_text: String = ""
 	for i in shorting.size():
+		name_text = name_text + Manager.stocks[i]["id"] +"\n"
 		count_text = count_text + str(shorting[i]) + "\n"
 		var mini_total: int = shorting[i] * Manager.stocks[i]["history"][Manager.stocks[i]["history"].size()-1]
 		total = total + mini_total
 		cost_text = cost_text + "$" + str(mini_total) + "\n"
 	cost_text = cost_text + "$" + str(total)
+	stock_name_label.text = name_text
 	short_count_label.text = count_text
 	short_cost_label.text = cost_text
 

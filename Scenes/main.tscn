@@ -413,10 +413,6 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_constants/table_v_separation = 20
 theme_override_constants/line_separation = 10
 theme_override_fonts/normal_font = ExtResource("6_b3802")
-text = "Stock 1
-Stock 2
-Stock 3
-Stock 4"
 
 [node name="Price" type="RichTextLabel" parent="UI/Opening/Screen"]
 layout_mode = 0
@@ -539,7 +535,7 @@ offset_top = 446.0
 offset_right = 422.0
 offset_bottom = 468.0
 text = "-"
-id = 4
+id = 3
 
 [node name="OpenMarket" parent="UI/Opening/Screen" instance=ExtResource("21_pdsj5")]
 layout_mode = 0
