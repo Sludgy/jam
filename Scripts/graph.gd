@@ -3,7 +3,9 @@ extends Node2D
 var LINE_WIDTH = 2
 var LINE_COLOUR_BULLISH = Color.GREEN
 var LINE_COLOUR_BEARISH = Color.RED
-var POINT_SPACING = 20
+var POINT_SPACING = 43
+
+
 	
 func update_graph():
 	# clear the old graph and prepare to redraw it
@@ -16,7 +18,7 @@ func update_graph():
 func plot_graph(stock):
 	var line = Line2D.new()
 	line.width = LINE_WIDTH
-	line.default_color = LINE_COLOUR_BULLISH
+	line.default_color = stock["graph_color"]
 	# set colour to red if stock on downtrend
 	var size = stock["history"].size()
 	if (size > 1):
